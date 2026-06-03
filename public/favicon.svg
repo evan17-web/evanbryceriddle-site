@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Evan Bryce Riddle">
+  <rect width="32" height="32" rx="7" fill="#1a1a1a"/>
+  <g fill="#c8960f">
+    <rect x="10" y="7" width="4.3" height="18" rx="1.1"/>
+    <rect x="10" y="7" width="12.6" height="4.2" rx="1.1"/>
+    <rect x="10" y="13.9" width="10.4" height="4.2" rx="1.1"/>
+    <rect x="10" y="20.8" width="12.6" height="4.2" rx="1.1"/>
+  </g>
+</svg>
