@@ -1,0 +1,111 @@
+---
+import { site } from '../content/site';
+import Icon from './Icon.astro';
+
+const socials = [
+  { name: 'LinkedIn', href: site.social.linkedin, icon: 'linkedin' as const },
+  { name: 'Instagram', href: site.social.instagram, icon: 'instagram' as const },
+  { name: 'YouTube', href: site.social.youtube, icon: 'youtube' as const },
+];
+---
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a href="#top" class="footer__name">{site.name}</a>
+      <p class="footer__tag">{site.hero.kicker}</p>
+    </div>
+
+    <div class="footer__right">
+      <a class="footer__contact" href={`mailto:${site.contactEmail}`}>
+        <Icon name="mail" size={18} />
+        <span>{site.contactEmail}</span>
+      </a>
+      <ul class="footer__social">
+        {socials.map((s) => (
+          <li>
+            <a href={s.href} aria-label={s.name} target="_blank" rel="noopener noreferrer">
+              <Icon name={s.icon} size={20} />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer__base">
+    <p>{site.copyright}</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--line);
+    background: var(--bg-raised);
+    padding-block: clamp(2.75rem, 6vw, 3.75rem) 1.75rem;
+  }
+  .footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem 1.5rem;
+  }
+  .footer__name {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.35rem;
+    letter-spacing: -0.01em;
+  }
+  .footer__name:hover { color: var(--accent-text); }
+  .footer__tag {
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-faint);
+  }
+
+  .footer__right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.1rem;
+  }
+  .footer__contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    transition: color 0.18s ease;
+  }
+  .footer__contact:hover { color: var(--accent-text); }
+
+  .footer__social { display: flex; gap: 0.6rem; }
+  .footer__social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem; height: 2.4rem;
+    border-radius: 50%;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    background: var(--card);
+    transition: color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  }
+  .footer__social a:hover {
+    color: var(--ink);
+    border-color: var(--line-strong);
+    transform: translateY(-2px);
+  }
+
+  .footer__base {
+    margin-top: clamp(2rem, 5vw, 3rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .footer__base p { font-size: 0.85rem; color: var(--ink-faint); }
+
+  @media (min-width: 620px) {
+    .footer__right { align-items: flex-end; }
+  }
+</style>

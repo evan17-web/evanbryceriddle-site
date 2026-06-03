@@ -1,0 +1,34 @@
+---
+import { icons, type IconName } from '../icons/icons';
+
+interface Props {
+  name: IconName;
+  /** pixel size (square) */
+  size?: number;
+  /** accessible label — when omitted the icon is hidden from assistive tech */
+  title?: string;
+  class?: string;
+}
+
+const { name, size = 20, title, class: className } = Astro.props;
+const icon = icons[name];
+if (!icon) throw new Error(`<Icon /> — unknown icon "${name}"`);
+
+const a11y = title
+  ? { role: 'img', 'aria-label': title }
+  : { 'aria-hidden': 'true', focusable: 'false' };
+---
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  width={size}
+  height={size}
+  fill={icon.solid ? 'currentColor' : 'none'}
+  stroke={icon.solid ? undefined : 'currentColor'}
+  stroke-width={icon.solid ? undefined : 2}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class:list={['icon', className]}
+  {...a11y}
+  set:html={icon.body}
+/>

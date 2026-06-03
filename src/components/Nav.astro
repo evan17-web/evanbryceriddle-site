@@ -1,0 +1,137 @@
+---
+import { site } from '../content/site';
+---
+<header class="nav" id="top">
+  <div class="container nav__inner">
+    <a class="nav__brand" href="#top">{site.name}</a>
+
+    <!-- Desktop links -->
+    <nav class="nav__links" aria-label="Primary">
+      {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+
+    <!-- Mobile disclosure menu (functions without JS via <details>) -->
+    <details class="nav__menu">
+      <summary class="nav__toggle">
+        <span class="sr-only">Menu</span>
+        <svg class="nav__burger" viewBox="0 0 24 24" width="24" height="24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path class="nav__burger-open" d="M3 6h18M3 12h18M3 18h18" />
+          <path class="nav__burger-close" d="M6 6 18 18M6 18 18 6" />
+        </svg>
+      </summary>
+      <nav class="nav__panel" aria-label="Primary (mobile)">
+        {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--nav-h);
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav__inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .nav__brand {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+  .nav__brand:hover { color: var(--accent-text); }
+
+  .nav__links { display: flex; align-items: center; gap: 1.6rem; }
+  .nav__links a {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    position: relative;
+    padding-block: 0.25rem;
+    transition: color 0.18s ease;
+  }
+  .nav__links a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -1px;
+    width: 100%; height: 1.5px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+  .nav__links a:hover { color: var(--ink); }
+  .nav__links a:hover::after { transform: scaleX(1); }
+
+  /* Mobile disclosure */
+  .nav__menu { position: relative; display: none; }
+  .nav__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem; height: 2.75rem;
+    margin-right: -0.5rem;
+    border-radius: var(--radius-sm);
+    list-style: none;
+    color: var(--ink);
+  }
+  .nav__toggle::-webkit-details-marker { display: none; }
+  .nav__burger-close { display: none; }
+  .nav__menu[open] .nav__burger-open { display: none; }
+  .nav__menu[open] .nav__burger-close { display: block; }
+
+  .nav__panel {
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    right: 0;
+    min-width: 13rem;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .nav__panel a {
+    padding: 0.7rem 0.85rem;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+  .nav__panel a:hover { background: var(--bg-raised); color: var(--ink); }
+
+  @media (max-width: 760px) {
+    .nav__links { display: none; }
+    .nav__menu { display: block; }
+  }
+</style>
+
+<script>
+  // Progressive enhancement: close the mobile menu after choosing a link
+  // or when tapping outside it. (Without JS the <details> still toggles.)
+  const menu = document.querySelector('.nav__menu');
+  if (menu instanceof HTMLDetailsElement) {
+    menu.querySelectorAll('a').forEach((link) =>
+      link.addEventListener('click', () => menu.removeAttribute('open')),
+    );
+    document.addEventListener('click', (event) => {
+      if (menu.open && event.target instanceof Node && !menu.contains(event.target)) {
+        menu.removeAttribute('open');
+      }
+    });
+  }
+</script>
