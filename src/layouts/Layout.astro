@@ -1,11 +1,11 @@
 ---
 import '../styles/global.css';
-// Self-hosted fonts (only the weights actually used → small payload).
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/500.css';
-import '@fontsource/inter/600.css';
-import '@fontsource/lora/600.css';
-import '@fontsource/lora/500-italic.css';
+// Self-hosted fonts. Variable faces (one file each, all weights) keep the
+// payload small. Sacramento is the single-weight signature script.
+import '@fontsource-variable/fraunces/standard.css';
+import '@fontsource-variable/fraunces/standard-italic.css';
+import '@fontsource-variable/hanken-grotesk/wght.css';
+import '@fontsource/sacramento/400.css';
 
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -41,7 +41,11 @@ const ogImageUrl = new URL(site.ogImage, Astro.site).href;
 
     <!-- Favicon -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Warm up the YouTube thumbnail host (facade thumbnails are lazy/below the fold) -->
+    <link rel="preconnect" href="https://i.ytimg.com" crossorigin />
+    <link rel="dns-prefetch" href="https://i.ytimg.com" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -64,7 +68,7 @@ const ogImageUrl = new URL(site.ogImage, Astro.site).href;
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <Nav />
-    <main id="main">
+    <main id="main" tabindex="-1">
       <slot />
     </main>
     <Footer />

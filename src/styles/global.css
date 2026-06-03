@@ -1,45 +1,48 @@
 /* ===========================================================================
    Global design system — Evan Bryce Riddle
-   Warm, editorial, founder-led. Cream background, warm ink, single gold accent.
+   Warm paper, rust accent, high-contrast editorial type (Fraunces + Hanken).
+   A distinct, hand-made feel — deliberately its own thing.
    --------------------------------------------------------------------------- */
 
 /* ── Design tokens ──────────────────────────────────────────────────────── */
 :root {
-  /* Surfaces */
-  --bg: #faf7f0;            /* warm cream (never stark white) */
-  --bg-raised: #f5f0e6;     /* slightly deeper cream for alternating sections */
-  --card: #fffdf8;          /* warm off-white card surface */
+  /* Surfaces — warm oat paper, not a yellow cream */
+  --paper: #f5f1e8;
+  --paper-raised: #efe9db;   /* alternating sections */
+  --card: #fbf8f1;           /* card surface */
 
-  /* Ink */
-  --ink: #1a1a1a;           /* warm near-black */
-  --ink-soft: #4a453d;      /* body / secondary (warm) */
-  --ink-faint: #6c655a;     /* captions, meta */
+  /* Ink — warm near-black */
+  --ink: #1f1a14;
+  --ink-soft: #51493d;       /* body / secondary */
+  --ink-faint: #786d5d;      /* captions, meta */
 
-  /* Gold accent.
-     NB: gold on cream is ~2.97:1 — too low for text. So:
-       --accent       → fills / button backgrounds / decoration (ink text on top)
-       --accent-text  → the only gold safe as TEXT on cream (~4.9:1, passes AA) */
-  --accent: #b8860b;
-  --accent-strong: #a2760a; /* gold button hover */
-  --accent-text: #8a6308;
+  /* Rust accent.
+     --accent      → button fills / decoration (passes AA with cream text, 5.0:1)
+     --accent-text → rust used as TEXT on paper (6.2:1, passes AA) */
+  --accent: #b0552e;
+  --accent-strong: #97481f;  /* button hover */
+  --accent-text: #8f4220;
+
+  /* Hand-drawn marker highlight (amber wash behind emphasised words) */
+  --marker: rgba(224, 168, 74, 0.42);
 
   /* Lines */
-  --line: #e7ded0;          /* warm hairline border */
-  --line-strong: #d8ccb8;
+  --line: #e4ddcd;
+  --line-strong: #d3c8b2;
 
   /* Type */
-  --font-serif: 'Lora', Georgia, 'Times New Roman', serif;
-  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Hanken Grotesk Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-script: 'Sacramento', 'Brush Script MT', cursive;
 
   /* Layout */
   --maxw: 1080px;
-  --maxw-prose: 660px;
-  --radius: 16px;
-  --radius-sm: 11px;
+  --maxw-prose: 640px;
+  --radius: 18px;
+  --radius-sm: 12px;
   --pill: 999px;
 
-  /* Soft, never-heavy shadow */
-  --shadow: 0 1px 2px rgba(26, 22, 12, 0.04), 0 6px 22px rgba(26, 22, 12, 0.06);
+  --shadow: 0 1px 2px rgba(31, 22, 12, 0.04), 0 10px 30px rgba(31, 22, 12, 0.07);
 
   --nav-h: 4.25rem;
 }
@@ -48,7 +51,6 @@
 *,
 *::before,
 *::after { box-sizing: border-box; }
-
 * { margin: 0; }
 
 html {
@@ -57,24 +59,34 @@ html {
 }
 
 body {
-  background: var(--bg);
+  position: relative;
+  background: var(--paper);
   color: var(--ink);
   font-family: var(--font-sans);
-  font-size: 1.0625rem;          /* 17px */
-  line-height: 1.7;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
 
+/* Subtle paper grain over everything — tactile, not flat. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 img, svg, video { display: block; max-width: 100%; }
 img { height: auto; }
-
 a { color: inherit; text-decoration: none; }
-
 ul { list-style: none; padding: 0; }
-
 button { font: inherit; color: inherit; cursor: pointer; }
 
 :focus-visible {
@@ -82,33 +94,79 @@ button { font: inherit; color: inherit; cursor: pointer; }
   outline-offset: 3px;
   border-radius: 4px;
 }
-
-::selection { background: rgba(184, 134, 11, 0.22); color: var(--ink); }
+::selection { background: rgba(176, 85, 46, 0.18); color: var(--ink); }
 
 /* ── Typography ─────────────────────────────────────────────────────────── */
 h1, h2, h3, h4 {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-weight: 600;
-  line-height: 1.12;
-  letter-spacing: -0.01em;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
   color: var(--ink);
   text-wrap: balance;
 }
+h1 { font-size: clamp(2.7rem, 1.4rem + 5.6vw, 4.6rem); letter-spacing: -0.028em; line-height: 1.02; }
+h2 { font-size: clamp(2.1rem, 1.4rem + 2.9vw, 3.1rem); }
+h3 { font-size: 1.4rem; font-weight: 560; line-height: 1.2; letter-spacing: -0.012em; }
 
-h1 { font-size: clamp(2.5rem, 1.6rem + 4vw, 4rem); letter-spacing: -0.02em; }
-h2 { font-size: clamp(2rem, 1.4rem + 2.6vw, 2.9rem); }
-h3 { font-size: 1.3rem; line-height: 1.25; letter-spacing: -0.005em; }
-
-/* Italic emphasis inside headings — warm gold, the editorial accent. */
+/* Emphasis: italic + a hand-drawn marker highlight under the word. */
 h1 em, h2 em, h3 em, .emph {
   font-style: italic;
-  font-weight: 500;
-  color: var(--accent-text);
+  font-weight: 540;
+  color: var(--ink);
+  background-image: linear-gradient(to top, var(--marker) 0, var(--marker) 0.42em, transparent 0.42em);
+  background-repeat: no-repeat;
+  padding-inline: 0.06em;
+  border-radius: 1px;
 }
 
 p { text-wrap: pretty; }
-
 strong { font-weight: 600; }
+
+/* ── Reusable text bits ─────────────────────────────────────────────────── */
+.eyebrow {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+
+.lead { font-size: clamp(1.15rem, 1rem + 0.7vw, 1.4rem); line-height: 1.5; color: var(--ink-soft); }
+
+/* Pull-quote */
+.pullquote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.15rem);
+  line-height: 1.28;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+/* "Currently" line */
+.currently { font-size: 0.95rem; color: var(--ink-soft); }
+.currently::before {
+  content: "";
+  display: inline-block;
+  width: 0.5rem; height: 0.5rem;
+  margin-right: 0.7rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0.26rem rgba(176, 85, 46, 0.16);
+  vertical-align: middle;
+}
+.currently b { font-weight: 600; color: var(--ink); }
+
+/* Hand-drawn signature */
+.signature {
+  font-family: var(--font-script);
+  font-size: 2.4rem;
+  line-height: 1;
+  color: var(--accent-text);
+}
 
 /* ── Layout helpers ─────────────────────────────────────────────────────── */
 .container {
@@ -117,27 +175,13 @@ strong { font-weight: 600; }
   margin-inline: auto;
   padding-inline: clamp(1.25rem, 5vw, 2.5rem);
 }
-
 .section {
   padding-block: clamp(3.75rem, 2rem + 8vw, 7rem);
   scroll-margin-top: calc(var(--nav-h) + 0.5rem);
 }
-.section--raised { background: var(--bg-raised); }
-
-.section-head { max-width: 42rem; }
+.section--raised { background: var(--paper-raised); }
+.section-head { max-width: 44rem; }
 .section-head p { color: var(--ink-soft); font-size: 1.125rem; margin-top: 0.9rem; }
-
-/* Small uppercase label above headings */
-.eyebrow {
-  display: inline-block;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent-text);
-}
-
-.lead { font-size: clamp(1.15rem, 1rem + 0.7vw, 1.4rem); line-height: 1.55; color: var(--ink-soft); }
 
 /* ── Buttons ────────────────────────────────────────────────────────────── */
 .btn {
@@ -145,7 +189,7 @@ strong { font-weight: 600; }
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.85rem 1.4rem;
+  padding: 0.9rem 1.45rem;
   font-family: var(--font-sans);
   font-size: 0.97rem;
   font-weight: 600;
@@ -154,26 +198,24 @@ strong { font-weight: 600; }
   border-radius: var(--pill);
   border: 1.5px solid transparent;
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-  text-align: center;
   white-space: nowrap;
 }
 .btn:active { transform: translateY(1px); }
-.btn .icon { width: 1.05em; height: 1.05em; }
+.btn .icon { width: 1.1em; height: 1.1em; }
 
-/* Primary: solid ink → warm gold on hover (both states pass AA) */
-.btn--primary { background: var(--ink); color: var(--bg); }
-.btn--primary:hover { background: var(--accent); color: var(--ink); }
+/* Accent (rust) — the book / primary money CTA. Cream text both states. */
+.btn--accent { background: var(--accent); color: #fbf8f1; }
+.btn--accent:hover { background: var(--accent-strong); color: #fff; }
 
-/* Gold primary variant for the single hero CTA */
-.btn--gold { background: var(--accent); color: var(--ink); }
-.btn--gold:hover { background: var(--accent-strong); color: var(--ink); }
+/* Primary ink — newsletter / playbooks */
+.btn--primary { background: var(--ink); color: var(--paper); }
+.btn--primary:hover { background: var(--accent); color: #fbf8f1; }
 
-/* Secondary: outline → fills with ink on hover */
+/* Secondary outline */
 .btn--secondary { background: transparent; color: var(--ink); border-color: var(--line-strong); }
-.btn--secondary:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn--secondary:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 
 .btn--block { width: 100%; }
-
 .btn:disabled,
 .btn[aria-disabled='true'] {
   opacity: 0.5;
@@ -199,33 +241,25 @@ strong { font-weight: 600; }
   white-space: nowrap;
   border: 0;
 }
-
 .skip-link {
   position: fixed;
-  top: 0.5rem;
-  left: 0.5rem;
+  top: 0.5rem; left: 0.5rem;
   z-index: 100;
   padding: 0.6rem 1rem;
   background: var(--ink);
-  color: var(--bg);
+  color: var(--paper);
   border-radius: var(--radius-sm);
   transform: translateY(-150%);
   transition: transform 0.18s ease;
 }
 .skip-link:focus { transform: translateY(0); }
+main:focus { outline: none; }
 
 /* ── Gentle reveal-on-scroll (progressive enhancement) ──────────────────── */
-/* Elements are hidden ONLY when JS is active (html.js is set inline in <head>),
-   so no-JS users and pre-hydration paints always show content. */
 .reveal { transition: opacity 0.7s ease, transform 0.7s ease; }
-.js .reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  will-change: opacity, transform;
-}
+.js .reveal { opacity: 0; transform: translateY(16px); will-change: opacity, transform; }
 .js .reveal.is-visible { opacity: 1; transform: none; }
 
-/* Respect users who prefer less motion */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .js .reveal { opacity: 1 !important; transform: none !important; transition: none; }

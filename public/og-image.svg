@@ -1,12 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
   <!-- Authored as a 1200x1200 square (QuickLook renders SVG thumbnails square),
-       then centre-cropped to 1200x630 for the final og-image.jpg. Content is
-       vertically centred so the crop frames it cleanly. -->
-  <rect width="1200" height="1200" fill="#faf7f0"/>
-  <rect x="40" y="320" width="1120" height="560" rx="24" fill="none" stroke="#e7ded0" stroke-width="2"/>
-  <rect x="100" y="476" width="6" height="172" rx="3" fill="#b8860b"/>
-  <text x="136" y="502" font-family="Georgia, 'Times New Roman', serif" font-size="22" letter-spacing="5" fill="#8a6308">FOUNDER · WRITER · BUILDER</text>
-  <text x="130" y="586" font-family="Georgia, 'Times New Roman', serif" font-size="66" font-weight="bold" fill="#1a1a1a">Evan Bryce Riddle</text>
-  <text x="132" y="640" font-family="Georgia, 'Times New Roman', serif" font-size="27" font-style="italic" fill="#4a453d">Building companies — and a life — worth waking up to.</text>
-  <text x="134" y="712" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#6c655a">evanbryceriddle.com</text>
+       then centre-cropped to 1200x630 for the final og-image.jpg. -->
+  <rect width="1200" height="1200" fill="#f5f1e8"/>
+  <rect x="40" y="320" width="1120" height="560" rx="24" fill="none" stroke="#e4ddcd" stroke-width="2"/>
+  <rect x="100" y="476" width="6" height="172" rx="3" fill="#b0552e"/>
+  <text x="136" y="502" font-family="Georgia, 'Times New Roman', serif" font-size="22" letter-spacing="5" fill="#8f4220">FOUNDER · WRITER · BUILDER</text>
+  <text x="130" y="586" font-family="Georgia, 'Times New Roman', serif" font-size="66" font-weight="bold" fill="#1f1a14">Evan Bryce Riddle</text>
+  <text x="132" y="640" font-family="Georgia, 'Times New Roman', serif" font-size="27" font-style="italic" fill="#51493d">Building companies — and a life — worth waking up to.</text>
+  <text x="134" y="712" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#786d5d">evanbryceriddle.com</text>
 </svg>
