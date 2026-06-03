@@ -41,6 +41,11 @@ export interface Resource {
   formUrl: string | null;
 }
 
+export interface VideoItem {
+  id: string;
+  title: string;
+}
+
 export const site = {
   // ── Identity & SEO ───────────────────────────────────────────────────────
   name: `Evan Bryce Riddle`,
@@ -68,6 +73,11 @@ export const site = {
     subhead: `Art of Mondays, Founder Sports Club, WLTH WLKS, and Monday Hires. Plus a book about building a business and a life you can't wait to wake up to.`,
     primary: { label: `Read the book`, href: `https://books.artofmondays.com/freedom/` } satisfies LinkButton,
     secondary: { label: `Join the newsletter`, href: `#newsletter` } satisfies LinkButton,
+    /** Drop a portrait at public/headshot.jpg, then set this to `/headshot.jpg`. */
+    photo: null as string | null,
+    photoAlt: `Evan Bryce Riddle`,
+    /** Short, human status line under the hero (edit freely). */
+    currently: `building four companies, writing, and helping founders trade hustle for freedom.`,
   },
 
   // ── 2. About ───────────────────────────────────────────────────────────────
@@ -78,6 +88,9 @@ export const site = {
       `A few years ago I was doing the thing a lot of founders do: more revenue, less freedom, a calendar that owned me. So I started building the opposite, on purpose. Now I spend most of my time helping other founders do the same.`,
       `These days that looks like a handful of companies, a book, and a lot of time spent with founders who refuse to trade their life for their business.`,
     ],
+    /** Pull-quote + hand-written sign-off shown in the About section. */
+    pullquote: `I refuse to trade my life for my business. So I started building the opposite — on purpose.`,
+    signoff: `Evan`,
   },
 
   // ── 3. What I'm building ───────────────────────────────────────────────────
@@ -140,26 +153,25 @@ export const site = {
   // ── 6. Latest videos ───────────────────────────────────────────────────────
   videos: {
     heading: `Latest from *YouTube*.`,
-    body: `Short, useful videos on building companies and a life you actually want.`,
-    /** 'rss'  → pull the newest uploads from the channel feed at build time.
-     *  'manual' → always use `fallbackIds` below.
-     *  In 'rss' mode, if the feed is unreachable at build, it automatically
-     *  falls back to `fallbackIds` so the section always renders. */
-    mode: `rss` as VideoMode,
+    body: `Longer videos on building companies — and a life you actually want.`,
+    /** 'manual' → show the curated long-form list below (recommended).
+     *  'rss'    → pull the newest uploads automatically, but note this ALSO
+     *             pulls in Shorts (which can't be reliably filtered out of a
+     *             static build without the YouTube Data API). */
+    mode: `manual` as VideoMode,
     channelId: `UCi0vJUP7Gxm39b0BojUWB3g`,
     channelUrl: `https://www.youtube.com/@EvanBryceRiddle`,
-    /** How many videos to show (3–6 looks best). */
+    /** How many to show (up to this many from the list below). */
     count: 6,
-    /** Newest-first fallback list (kept current as of build). Used in 'manual'
-     *  mode or whenever the live fetch fails. */
-    fallbackIds: [
-      `ZE9mhafjW5c`,
-      `N0PYho3UnKM`,
-      `CVRzKV1gGao`,
-      `8YB3_aOqw9o`,
-      `LcEVU01MaYQ`,
-      `Lc2Ocwl6VCw`,
-    ],
+    /** Curated long-form videos, newest first. When you publish a new long-form
+     *  video, paste a `{ id, title }` at the top. (id = the part after
+     *  watch?v=  in the YouTube URL.) */
+    longform: [
+      { id: `ZE9mhafjW5c`, title: `You can't fake this kind of pressure...` },
+      { id: `N0PYho3UnKM`, title: `What stepping away showed me about my life.` },
+      { id: `CVRzKV1gGao`, title: `Why You Keep Hiring B-Players` },
+      { id: `8YB3_aOqw9o`, title: `i moved my team to a remote japanese village` },
+    ] satisfies VideoItem[],
   },
 
   // ── 7. Newsletter ──────────────────────────────────────────────────────────

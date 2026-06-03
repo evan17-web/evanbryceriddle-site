@@ -7,13 +7,20 @@ import VideoFacade from './VideoFacade.astro';
 
 const cfg = site.videos;
 
-// Build-time fetch: pulls the newest uploads (or the manual fallback list).
-const { videos } = await getVideos({
-  mode: cfg.mode,
-  channelId: cfg.channelId,
-  count: cfg.count,
-  fallbackIds: cfg.fallbackIds,
-});
+// 'manual' shows the curated long-form list (with titles). 'rss' pulls the
+// newest uploads at build, falling back to the curated list if the feed fails.
+let videos;
+if (cfg.mode === 'manual') {
+  videos = cfg.longform.slice(0, cfg.count);
+} else {
+  const result = await getVideos({
+    mode: 'rss',
+    channelId: cfg.channelId,
+    count: cfg.count,
+    fallbackIds: cfg.longform.map((v) => v.id),
+  });
+  videos = result.videos;
+}
 ---
 <section class="section section--raised" id="videos">
   <div class="container">
@@ -48,13 +55,10 @@ const { videos } = await getVideos({
     margin-top: clamp(2rem, 4vw, 2.75rem);
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem 1.15rem;
+    gap: 1.85rem 1.6rem;
   }
-  @media (min-width: 560px) {
+  @media (min-width: 640px) {
     .video-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (min-width: 880px) {
-    .video-grid { grid-template-columns: repeat(3, 1fr); }
   }
 </style>
 
@@ -81,6 +85,8 @@ const { videos } = await getVideos({
     const frame = btn.closest('.video__frame');
     const id = btn.getAttribute('data-id');
     if (!frame || !id) return;
-    frame.replaceChildren(buildPlayer(id, btn.getAttribute('data-title') ?? ''));
+    const player = buildPlayer(id, btn.getAttribute('data-title') ?? '');
+    frame.replaceChildren(player);
+    player.focus(); // keep keyboard focus on the player the user just opened
   });
 </script>

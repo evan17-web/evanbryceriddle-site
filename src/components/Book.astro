@@ -25,7 +25,7 @@ const { book } = site;
       <h2 set:html={emphasize(book.heading)} />
       <p>{book.body}</p>
       <div class="book__actions">
-        <a class="btn btn--gold" href={book.cta.href} target="_blank" rel="noopener noreferrer">
+        <a class="btn btn--accent" href={book.cta.href} target="_blank" rel="noopener noreferrer">
           {book.cta.label}
           <Icon name="arrow-up-right" size={18} />
         </a>

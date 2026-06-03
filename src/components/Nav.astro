@@ -33,7 +33,7 @@ import { site } from '../content/site';
     top: 0;
     z-index: 50;
     height: var(--nav-h);
-    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    background: color-mix(in srgb, var(--paper) 82%, transparent);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--line);
@@ -46,7 +46,7 @@ import { site } from '../content/site';
     gap: 1rem;
   }
   .nav__brand {
-    font-family: var(--font-serif);
+    font-family: var(--font-display);
     font-weight: 600;
     font-size: 1.05rem;
     letter-spacing: -0.01em;
@@ -112,7 +112,7 @@ import { site } from '../content/site';
     font-weight: 500;
     color: var(--ink-soft);
   }
-  .nav__panel a:hover { background: var(--bg-raised); color: var(--ink); }
+  .nav__panel a:hover { background: var(--paper-raised); color: var(--ink); }
 
   @media (max-width: 760px) {
     .nav__links { display: none; }
