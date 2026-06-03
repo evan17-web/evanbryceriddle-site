@@ -1,0 +1,34 @@
+---
+import { site } from '../content/site';
+import { emphasize } from '../lib/text.mjs';
+
+const { about } = site;
+---
+<section class="section section--raised" id="about">
+  <div class="container about reveal">
+    <h2 class="about__heading" set:html={emphasize(about.heading)} />
+    <div class="about__body">
+      {about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .about { display: grid; gap: 1.5rem; }
+  .about__heading { max-width: 12ch; }
+  .about__body {
+    max-width: var(--maxw-prose);
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+  .about__body p { color: var(--ink-soft); font-size: 1.1rem; }
+
+  @media (min-width: 880px) {
+    .about {
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 1.5rem 4rem;
+      align-items: start;
+    }
+  }
+</style>

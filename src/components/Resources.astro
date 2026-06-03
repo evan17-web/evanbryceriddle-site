@@ -1,0 +1,79 @@
+---
+import { site } from '../content/site';
+import { emphasize } from '../lib/text.mjs';
+import Icon from './Icon.astro';
+
+const { resources } = site;
+---
+<section class="section" id="resources">
+  <div class="container">
+    <div class="section-head reveal">
+      <h2 set:html={emphasize(resources.heading)} />
+      <p>{resources.body}</p>
+    </div>
+    <ul class="resource-grid">
+      {resources.items.map((item) => (
+        <li class="resource-card reveal">
+          <span class="resource-card__icon"><Icon name="download" size={22} /></span>
+          <h3>{item.title}</h3>
+          <p>{item.description}</p>
+          <div class="resource-card__action">
+            {item.formUrl ? (
+              <a class="btn btn--primary btn--block" href={item.formUrl} target="_blank" rel="noopener noreferrer">
+                <Icon name="download" size={18} />
+                {item.buttonLabel}
+              </a>
+            ) : (
+              <Fragment>
+                <button class="btn btn--primary btn--block" type="button" disabled>{item.buttonLabel}</button>
+                <p class="resource-card__soon">Coming soon</p>
+              </Fragment>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .resource-grid {
+    margin-top: clamp(2rem, 4vw, 2.75rem);
+    display: grid;
+    gap: 1.1rem;
+  }
+  @media (min-width: 640px) {
+    .resource-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .resource-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    height: 100%;
+    padding: clamp(1.6rem, 3vw, 2.1rem);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .resource-card__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.85rem;
+    height: 2.85rem;
+    margin-bottom: 0.4rem;
+    border-radius: 50%;
+    color: var(--accent-text);
+    background: color-mix(in srgb, var(--accent) 13%, transparent);
+  }
+  .resource-card p { color: var(--ink-soft); }
+  /* push the action block to the bottom for equal-height cards */
+  .resource-card__action { margin-top: auto; padding-top: 1.25rem; }
+  .resource-card__soon {
+    margin-top: 0.7rem;
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+  }
+</style>

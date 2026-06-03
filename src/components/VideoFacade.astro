@@ -1,0 +1,112 @@
+---
+/**
+ * Lite "facade" YouTube embed: renders only a thumbnail + play button.
+ * The real iframe is injected on click (see the script in Videos.astro), which
+ * keeps the page fast AND makes the play count as a genuine YouTube view.
+ * With JS disabled, the thumbnail is a plain link to the watch page (fallback).
+ */
+interface Props {
+  id: string;
+  title?: string;
+}
+const { id, title = '' } = Astro.props;
+const hasTitle = title.trim().length > 0;
+const watchUrl = `https://www.youtube.com/watch?v=${id}`;
+const thumbUrl = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+const ariaLabel = hasTitle ? `Play video: ${title}` : 'Play latest video';
+---
+<li class="video reveal">
+  <div class="video__frame">
+    <a
+      class="video__btn"
+      href={watchUrl}
+      data-id={id}
+      data-title={title}
+      aria-label={ariaLabel}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img
+        class="video__thumb"
+        src={thumbUrl}
+        alt=""
+        width="480"
+        height="360"
+        loading="lazy"
+        decoding="async"
+      />
+      <span class="video__play" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+      </span>
+    </a>
+  </div>
+  <a class="video__caption" href={watchUrl} target="_blank" rel="noopener noreferrer">
+    {hasTitle ? title : 'Watch on YouTube'}
+  </a>
+</li>
+
+<style>
+  .video { display: flex; flex-direction: column; }
+
+  .video__frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    background: #0e0d0b;
+    border: 1px solid var(--line);
+  }
+  .video__btn {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+  .video__thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+  .video__btn:hover .video__thumb,
+  .video__btn:focus-visible .video__thumb { transform: scale(1.04); }
+
+  .video__play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.4rem;
+    height: 3.4rem;
+    padding-left: 3px; /* optically centre the triangle */
+    border-radius: 50%;
+    background: rgba(20, 17, 10, 0.58);
+    color: #fff;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  }
+  .video__btn:hover .video__play,
+  .video__btn:focus-visible .video__play {
+    background: var(--accent);
+    color: var(--ink);
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+
+  .video__caption {
+    margin-top: 0.7rem;
+    font-size: 0.92rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    transition: color 0.18s ease;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .video__caption:hover { color: var(--accent-text); }
+</style>

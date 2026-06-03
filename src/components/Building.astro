@@ -1,0 +1,73 @@
+---
+import { site } from '../content/site';
+import { emphasize } from '../lib/text.mjs';
+import Icon from './Icon.astro';
+
+const { building } = site;
+---
+<section class="section" id="building">
+  <div class="container">
+    <div class="section-head reveal">
+      <h2 set:html={emphasize(building.heading)} />
+    </div>
+    <ul class="brand-grid">
+      {building.cards.map((card) => (
+        <li class="reveal">
+          <a class="brand-card" href={card.href} target="_blank" rel="noopener noreferrer">
+            <div class="brand-card__head">
+              <h3>{card.name}</h3>
+              <Icon name="arrow-up-right" size={20} class="brand-card__arrow" />
+            </div>
+            <p>{card.tagline}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .brand-grid {
+    margin-top: clamp(2rem, 4vw, 2.75rem);
+    display: grid;
+    gap: 1.1rem;
+  }
+  @media (min-width: 640px) {
+    .brand-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .brand-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    height: 100%;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .brand-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--line-strong);
+    box-shadow: var(--shadow);
+  }
+  .brand-card__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .brand-card h3 { transition: color 0.2s ease; }
+  .brand-card:hover h3 { color: var(--accent-text); }
+  .brand-card p { color: var(--ink-soft); }
+  .brand-card__arrow {
+    flex: none;
+    color: var(--ink-faint);
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+  .brand-card:hover .brand-card__arrow {
+    color: var(--accent-text);
+    transform: translate(2px, -2px);
+  }
+</style>

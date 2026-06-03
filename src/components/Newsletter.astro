@@ -1,0 +1,91 @@
+---
+import { site } from '../content/site';
+import { emphasize } from '../lib/text.mjs';
+import Icon from './Icon.astro';
+
+const { newsletter } = site;
+---
+<section class="section" id="newsletter">
+  <div class="container newsletter reveal">
+    <div class="newsletter__head">
+      <span class="newsletter__icon"><Icon name="mail" size={22} /></span>
+      <h2 set:html={emphasize(newsletter.heading)} />
+      <p>{newsletter.body}</p>
+    </div>
+
+    {newsletter.embed ? (
+      <div class="newsletter__embed" set:html={newsletter.embed} />
+    ) : (
+      <Fragment>
+        <form class="newsletter__form" aria-describedby="newsletter-soon">
+          <label class="sr-only" for="nl-email">Email address</label>
+          <input
+            id="nl-email"
+            type="email"
+            name="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            disabled
+          />
+          <button class="btn btn--primary" type="submit" disabled>Subscribe</button>
+        </form>
+        <p id="newsletter-soon" class="newsletter__soon">Coming soon — signup is being set up.</p>
+      </Fragment>
+    )}
+  </div>
+</section>
+
+<style>
+  .newsletter {
+    max-width: 600px;
+    margin-inline: auto;
+    text-align: center;
+  }
+  .newsletter__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1.25rem;
+    border-radius: 50%;
+    color: var(--accent-text);
+    background: color-mix(in srgb, var(--accent) 13%, transparent);
+  }
+  .newsletter__head p {
+    margin-top: 0.9rem;
+    color: var(--ink-soft);
+    font-size: 1.1rem;
+  }
+
+  .newsletter__form {
+    display: flex;
+    gap: 0.6rem;
+    max-width: 440px;
+    margin: 1.85rem auto 0;
+  }
+  .newsletter__form input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.85rem 1.2rem;
+    font: inherit;
+    font-size: 0.97rem;
+    color: var(--ink);
+    background: var(--card);
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--pill);
+  }
+  .newsletter__form input::placeholder { color: var(--ink-faint); }
+  .newsletter__form input:disabled { background: var(--bg-raised); cursor: not-allowed; }
+
+  .newsletter__soon {
+    margin-top: 0.9rem;
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+  .newsletter__embed { margin-top: 1.85rem; }
+
+  @media (max-width: 480px) {
+    .newsletter__form { flex-direction: column; }
+  }
+</style>
