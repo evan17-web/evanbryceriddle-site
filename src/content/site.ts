@@ -73,9 +73,9 @@ export const site = {
     subhead: `Art of Mondays, Founder Sports Club, WLTH WLKS, and Monday Hires. Plus a book about building a business and a life you can't wait to wake up to.`,
     primary: { label: `Read the book`, href: `https://books.artofmondays.com/freedom/` } satisfies LinkButton,
     secondary: { label: `Join the newsletter`, href: `#newsletter` } satisfies LinkButton,
-    /** Drop a portrait at public/headshot.jpg, then set this to `/headshot.jpg`. */
-    photo: null as string | null,
-    photoAlt: `Evan Bryce Riddle`,
+    /** Portrait shown in the hero. Replace public/headshot.jpg to change it. */
+    photo: `/headshot.jpg` as string | null,
+    photoAlt: `Evan Bryce Riddle outdoors by the coast`,
     /** Short, human status line under the hero (edit freely). */
     currently: `building four companies, writing, and helping founders trade hustle for freedom.`,
   },
