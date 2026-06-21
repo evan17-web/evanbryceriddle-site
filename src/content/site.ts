@@ -200,7 +200,7 @@ export const site = {
   // ── 6. Latest videos ───────────────────────────────────────────────────────
   videos: {
     heading: `Latest from *YouTube*.`,
-    body: `Longer videos on building companies, and a life you actually want.`,
+    body: `I film and write as I go. Partly to help other founders, partly because I want to remember it. We're building something while we're young enough to enjoy it, and that feels worth keeping.`,
     /** If the YOUTUBE_API_KEY env var is set (on Vercel), videos AUTO-UPDATE:
      *  newest long-form uploads are fetched at build and Shorts are filtered out
      *  by duration. Otherwise it falls back to the curated list below.
