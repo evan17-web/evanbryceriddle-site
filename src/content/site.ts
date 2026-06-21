@@ -38,9 +38,14 @@ export interface Resource {
   title: string;
   description: string;
   buttonLabel: string;
-  /** FILL: Kit/Beehiiv form URL that captures the email and delivers the file.
-   *  Leave as null to show a clearly-marked "Coming soon" button. */
+  /** The playbook link. Used as the fallback destination and the place your
+   *  Klaviyo gate form should redirect to after capturing the email. */
   formUrl: string | null;
+  /** Klaviyo EMBED form id that gates this playbook (in Klaviyo, set the form's
+   *  success action to redirect to formUrl). Null = link straight to the playbook. */
+  klaviyoFormId?: string | null;
+  /** 3D ebook cover accent. */
+  accent?: 'rust' | 'teal';
 }
 
 export interface VideoItem {
@@ -106,7 +111,7 @@ export const site = {
       `So I build companies around what I actually value. Art of Mondays works because Jai and I built it for ourselves, so we're always, in a way, building for the people we are.`,
     ],
     /** Shown as a short aside (the interlude after What I'm building). */
-    creativeLine: `And when I'm not building businesses... I make videos, take photos, and write. Travel writing, mostly.`,
+    creativeLine: `And when I'm not building businesses... I make videos, take photos, pet kitties, and write. Travel writing, mostly.`,
     /** A few of my own photos, shown as a strip under the creative line. */
     gallery: [
       { src: `/life-1.jpg`, alt: `Roadside coffee with the mountains behind` },
@@ -176,12 +181,18 @@ export const site = {
         description: `How I hire people who raise the average, not just fill a seat.`,
         buttonLabel: `Get the playbook`,
         formUrl: `https://artofmondays.notion.site/How-to-Hire-and-empower-A-Players-1ef381deb0c780ca87bee7cb324237a3?source=copy_link`,
+        accent: `rust`,
+        // FILL: paste your Klaviyo gate form id to require an email before the playbook opens.
+        klaviyoFormId: null,
       },
       {
         title: `The Lead Gen Playbook`,
         description: `The system I use to bring in leads without burning out on content.`,
         buttonLabel: `Get the playbook`,
         formUrl: `https://just-clef-a0c.notion.site/Lead-Generation-Playbook-83f8440a5c574e328762aa77645428ff?source=copy_link`,
+        accent: `teal`,
+        // FILL: paste your Klaviyo gate form id to require an email before the playbook opens.
+        klaviyoFormId: null,
       },
     ] satisfies Resource[],
   },
@@ -215,7 +226,7 @@ export const site = {
   // ── 7. Newsletter ──────────────────────────────────────────────────────────
   newsletter: {
     heading: `Behind the *build*.`,
-    body: `The behind-the-scenes of building the companies, plus business tips and tricks from me and my Founder Family. All free, no spam, no daily hustle takes.`,
+    body: `The behind-the-scenes of building the companies, plus business tips and tricks from me and my Founder Family. All free, no spam.`,
     /** Klaviyo embed form (loaded by the klaviyo.js script in Layout via site.klaviyo). */
     embed: `<div class="klaviyo-form-VkFAzM"></div>` as string | null,
   },

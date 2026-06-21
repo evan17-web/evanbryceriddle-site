@@ -1,8 +1,8 @@
 ---
 import { site } from '../content/site';
 import { emphasize } from '../lib/text.mjs';
-import Icon from './Icon.astro';
 import { withUtm } from '../lib/url.mjs';
+import Icon from './Icon.astro';
 
 const { resources } = site;
 ---
@@ -13,26 +13,54 @@ const { resources } = site;
       <p>{resources.body}</p>
     </div>
     <ul class="resource-grid">
-      {resources.items.map((item) => (
-        <li class="resource-card reveal">
-          <span class="resource-card__icon"><Icon name="download" size={22} /></span>
-          <h3>{item.title}</h3>
-          <p>{item.description}</p>
-          <div class="resource-card__action">
-            {item.formUrl ? (
-              <a class="btn btn--primary btn--block" href={withUtm(item.formUrl, 'playbook-' + item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'))} target="_blank" rel="noopener noreferrer">
-                <Icon name="download" size={18} />
-                {item.buttonLabel}
-              </a>
-            ) : (
-              <Fragment>
-                <button class="btn btn--primary btn--block" type="button" disabled>{item.buttonLabel}</button>
-                <p class="resource-card__soon">Coming soon</p>
-              </Fragment>
+      {resources.items.map((item, i) => {
+        const dialogId = `gate-${i}`;
+        const slug = item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        return (
+          <li class={`resource-card reveal ebook--${item.accent ?? 'rust'}`}>
+            <div class="ebook" aria-hidden="true">
+              <div class="ebook__cover">
+                <span class="ebook__kicker">Playbook</span>
+                <span class="ebook__title">{item.title.replace(/^The\s+/, '')}</span>
+                <span class="ebook__by">Evan Bryce Riddle</span>
+              </div>
+            </div>
+
+            <div class="resource-card__body">
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <div class="resource-card__action">
+                {item.klaviyoFormId ? (
+                  <button class="btn btn--primary btn--block" type="button" data-gate={dialogId}>
+                    <Icon name="download" size={18} />
+                    {item.buttonLabel}
+                  </button>
+                ) : item.formUrl ? (
+                  <a class="btn btn--primary btn--block" href={withUtm(item.formUrl, 'playbook-' + slug)} target="_blank" rel="noopener noreferrer">
+                    <Icon name="download" size={18} />
+                    {item.buttonLabel}
+                  </a>
+                ) : (
+                  <Fragment>
+                    <button class="btn btn--primary btn--block" type="button" disabled>{item.buttonLabel}</button>
+                    <p class="resource-card__soon">Coming soon</p>
+                  </Fragment>
+                )}
+              </div>
+            </div>
+
+            {item.klaviyoFormId && (
+              <dialog id={dialogId} class="gate">
+                <form method="dialog" class="gate__head"><button class="gate__close" aria-label="Close">&times;</button></form>
+                <p class="eyebrow eyebrow--teal">Free playbook</p>
+                <h3 class="gate__title">{item.title}</h3>
+                <p class="gate__text">Drop your email and I'll send it straight over.</p>
+                <div set:html={`<div class="klaviyo-form-${item.klaviyoFormId}"></div>`} />
+              </dialog>
             )}
-          </div>
-        </li>
-      ))}
+          </li>
+        );
+      })}
     </ul>
   </div>
 </section>
@@ -50,31 +78,81 @@ const { resources } = site;
   .resource-card {
     display: flex;
     flex-direction: column;
-    gap: 0.65rem;
+    align-items: center;
+    text-align: center;
     height: 100%;
-    padding: clamp(1.6rem, 3vw, 2.1rem);
+    padding: clamp(2rem, 3.5vw, 2.5rem) clamp(1.5rem, 3vw, 2rem);
     background: var(--card);
     border: 1px solid var(--line);
     border-radius: var(--radius);
   }
-  .resource-card__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.85rem;
-    height: 2.85rem;
-    margin-bottom: 0.4rem;
-    border-radius: 50%;
-    color: var(--accent-text);
-    background: color-mix(in srgb, var(--accent) 13%, transparent);
+
+  /* 3D ebook cover */
+  .ebook { perspective: 1100px; margin-bottom: 1.4rem; padding: 0.4rem 1.4rem 0.4rem 0.4rem; }
+  .ebook__cover {
+    position: relative;
+    width: 134px;
+    aspect-ratio: 1 / 1.4;
+    border-radius: 3px 7px 7px 3px;
+    padding: 0.95rem 0.85rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #fbf8f1;
+    transform: rotateY(-22deg) rotateX(3deg);
+    border-left: 4px solid rgba(20, 14, 8, 0.32);
+    box-shadow:
+      3px 1px 0 0 #efe9db, 5px 1px 0 0 #e6dfce, 7px 1px 0 0 #dcd1bc, 9px 2px 0 0 #d0c4ac,
+      26px 22px 40px rgba(31, 22, 12, 0.32);
+    transition: transform 0.45s ease;
   }
+  .ebook--rust .ebook__cover { background: linear-gradient(140deg, #c4622f, var(--accent-strong)); }
+  .ebook--teal .ebook__cover { background: linear-gradient(140deg, var(--teal), var(--teal-strong)); }
+  .resource-card:hover .ebook__cover { transform: rotateY(-12deg) rotateX(2deg) translateY(-4px); }
+  .ebook__kicker { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.82; }
+  .ebook__title { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; line-height: 1.1; text-align: left; }
+  .ebook__by { font-size: 0.56rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.72; }
+
+  .resource-card__body { display: flex; flex-direction: column; gap: 0.55rem; flex: 1; width: 100%; }
   .resource-card p { color: var(--ink-soft); }
-  /* push the action block to the bottom for equal-height cards */
-  .resource-card__action { margin-top: auto; padding-top: 1.25rem; }
-  .resource-card__soon {
-    margin-top: 0.7rem;
-    text-align: center;
-    font-size: 0.82rem;
-    color: var(--ink-faint);
+  .resource-card__action { margin-top: auto; padding-top: 1.2rem; }
+  .resource-card__soon { margin-top: 0.7rem; font-size: 0.82rem; color: var(--ink-faint); }
+
+  /* Email-gate dialog */
+  .gate {
+    width: min(92vw, 26rem);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--card);
+    color: var(--ink);
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    box-shadow: 0 24px 60px rgba(31, 22, 12, 0.28);
   }
+  .gate::backdrop { background: rgba(20, 14, 8, 0.5); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
+  .gate__head { display: flex; justify-content: flex-end; margin: -0.6rem -0.6rem 0 0; }
+  .gate__close {
+    width: 2.1rem; height: 2.1rem;
+    border: none; background: transparent;
+    font-size: 1.6rem; line-height: 1; color: var(--ink-faint);
+    cursor: pointer; border-radius: 50%;
+  }
+  .gate__close:hover { background: var(--paper-raised); color: var(--ink); }
+  .gate__title { margin-top: 0.35rem; }
+  .gate__text { margin: 0.5rem 0 1.2rem; color: var(--ink-soft); }
 </style>
+
+<script>
+  // Open a playbook's email gate; close on backdrop click (Esc closes natively).
+  document.querySelectorAll('[data-gate]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-gate');
+      const dialog = id && document.getElementById(id);
+      if (dialog instanceof HTMLDialogElement) dialog.showModal();
+    });
+  });
+  document.querySelectorAll('dialog.gate').forEach((dialog) => {
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+  });
+</script>
