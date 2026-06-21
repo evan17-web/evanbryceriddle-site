@@ -93,6 +93,9 @@ export const site = {
     label: `And here's who I was before the companies. The janky old website, the side hustles, the creative projects.`,
   },
 
+  /** Klaviyo onsite JS company ID (your Public API Key) — powers the newsletter form. */
+  klaviyo: { companyId: `RP2BpB` },
+
   // ── 2. About ───────────────────────────────────────────────────────────────
   about: {
     eyebrow: `Who I am`,
@@ -178,8 +181,7 @@ export const site = {
         title: `The Lead Gen Playbook`,
         description: `The system I use to bring in leads without burning out on content.`,
         buttonLabel: `Get the playbook`,
-        // FILL: the link you sent was your Notion workspace root, not the playbook page. Paste the real Lead Gen Playbook link here.
-        formUrl: null,
+        formUrl: `https://just-clef-a0c.notion.site/Lead-Generation-Playbook-83f8440a5c574e328762aa77645428ff?source=copy_link`,
       },
     ] satisfies Resource[],
   },
@@ -212,8 +214,8 @@ export const site = {
   newsletter: {
     heading: `The *occasional* email.`,
     body: `I send the occasional note on building companies and a life worth living. No daily hustle takes, no spam. Just the useful stuff.`,
-    /** FILL: EMAIL_PROVIDER_EMBED — paste your Kit/Beehiiv form embed HTML here
-     *  (as a string). Leave as null to show the styled "Coming soon" placeholder. */
+    /** Set this to your Klaviyo EMBED form div once ready (VkFAzM was a popup form),
+     *  then re-enable the klaviyo.js script in Layout.astro. */
     embed: null as string | null,
   },
 

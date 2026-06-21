@@ -1,86 +1,96 @@
 ---
 import { site } from '../content/site';
 import { emphasize } from '../lib/text.mjs';
-import Icon from './Icon.astro';
 import VideoFacade from './VideoFacade.astro';
 
 const { about } = site;
+const shots = about.photos.filter((p) => p.src);
 ---
 <section class="section section--raised" id="about">
   <div class="container about reveal">
-    <div class="about__intro">
-      <p class="eyebrow eyebrow--teal">{about.eyebrow}</p>
-      <h2 class="about__heading" set:html={emphasize(about.heading)} />
-      <div class="about__lead">
-        {about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    <div class="about__head">
+      <div class="about__head-main">
+        <p class="eyebrow eyebrow--teal">{about.eyebrow}</p>
+        <h2 class="about__heading" set:html={emphasize(about.heading)} />
+        <blockquote class="pullquote about__quote">{about.pullquote}</blockquote>
       </div>
-      <ul class="chip-row about__values">
-        {about.values.map((value) => <li class="chip">{value}</li>)}
-      </ul>
-      <blockquote class="pullquote about__quote">{about.pullquote}</blockquote>
-      <p class="signature about__sign">{about.signoff}</p>
-    </div>
-
-    <div class="about__media">
-      <div class="about__video">
-        <p class="about__media-label">
-          <Icon name="play-circle" size={16} /> Rather hear it from me?
-        </p>
-        <ul class="about__video-list">
-          <VideoFacade id={about.featuredVideo.id} title={about.featuredVideo.title} />
+      <div class="about__head-body">
+        {about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        <ul class="chip-row about__values">
+          {about.values.map((value) => <li class="chip">{value}</li>)}
         </ul>
       </div>
-      {about.photos.map((photo) => (
-        <figure class="about__photo">
-          {photo.src ? (
-            <img src={photo.src} alt={photo.label} loading="lazy" decoding="async" />
-          ) : (
-            <div class="media-ph">
-              <Icon name="image" size={26} />
-              <span>{photo.label}</span>
-            </div>
-          )}
-        </figure>
-      ))}
     </div>
+
+    <ul class="about__strip">
+      <VideoFacade id={about.featuredVideo.id} title={about.featuredVideo.title} />
+      {shots.map((photo) => (
+        <li class="about__shot">
+          <div class="about__shot-frame">
+            <img src={photo.src} alt={photo.label} loading="lazy" decoding="async" />
+          </div>
+          <span class="about__shot-cap">{photo.label}</span>
+        </li>
+      ))}
+    </ul>
+
+    <p class="signature about__sign">{about.signoff}</p>
   </div>
 </section>
 
 <style>
-  .about { display: grid; gap: 2.75rem; }
+  .about__head { display: grid; gap: 2rem; }
   @media (min-width: 900px) {
-    .about { grid-template-columns: 1.05fr 0.95fr; gap: 1.5rem 4rem; align-items: start; }
+    .about__head { grid-template-columns: 0.82fr 1.18fr; gap: 1.5rem 4rem; align-items: start; }
   }
-
-  .about__heading { margin-top: 0.85rem; max-width: 14ch; }
-  .about__lead { margin-top: 1.4rem; display: flex; flex-direction: column; gap: 1.05rem; }
-  .about__lead p { color: var(--ink-soft); font-size: 1.1rem; }
-  .about__values { margin-top: 1.6rem; }
+  .about__heading { margin-top: 0.85rem; max-width: 13ch; }
   .about__quote {
-    margin-top: 1.85rem;
-    max-width: 30ch;
+    margin-top: 1.5rem;
+    max-width: 32ch;
     padding-left: 1.25rem;
     border-left: 3px solid var(--teal);
   }
-  p.about__sign { margin-top: 1rem; font-size: 2.9rem; line-height: 1; }
-
-  .about__media { display: flex; flex-direction: column; gap: 1.4rem; }
-  .about__media-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    margin-bottom: 0.7rem;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--teal-text);
+  .about__head-body {
+    max-width: var(--maxw-prose);
+    display: flex;
+    flex-direction: column;
+    gap: 1.05rem;
   }
-  .about__video-list { display: block; }
-  .about__photo { aspect-ratio: 4 / 3; }
-  .about__photo img {
+  .about__head-body p { color: var(--ink-soft); font-size: 1.1rem; }
+  .about__values { margin-top: 0.7rem; }
+
+  /* Photo-essay strip: video + two frames, equal 16:9 cells */
+  .about__strip {
+    margin-top: clamp(2.25rem, 4vw, 3.25rem);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1rem, 2vw, 1.4rem);
+  }
+  @media (min-width: 640px) {
+    .about__strip { grid-template-columns: repeat(3, 1fr); }
+  }
+  .about__shot { display: flex; flex-direction: column; }
+  .about__shot-frame {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    background: var(--paper-raised);
+  }
+  .about__shot-frame img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: var(--radius);
-    border: 1px solid var(--line);
+    object-position: center 38%;
+    transition: transform 0.4s ease;
   }
+  .about__shot:hover .about__shot-frame img { transform: scale(1.04); }
+  .about__shot-cap {
+    margin-top: 0.7rem;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+
+  p.about__sign { margin-top: clamp(1.75rem, 3vw, 2.5rem); font-size: 2.9rem; line-height: 1; }
 </style>
