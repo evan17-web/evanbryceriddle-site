@@ -115,7 +115,7 @@ export const site = {
     ],
     /** Things I'm driven by — shown as chips. */
     values: [`Health`, `Travel`, `People`, `Ambition`, `Adventure`, `Play`, `Freedom`, `Community`],
-    pullquote: `My version of rest isn't sitting still. It's swapping one kind of focus for another.`,
+    pullquote: `Health, travel, good people. Everything I build comes back to those three.`,
     signoff: `Evan`,
     /** A video of me talking, so people can hear me, not just read about me. */
     featuredVideo: { id: `N0PYho3UnKM`, title: `What stepping away showed me about my life` } satisfies VideoItem,
