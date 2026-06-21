@@ -1,17 +1,30 @@
 ---
 import { site } from '../content/site';
 import { emphasize } from '../lib/text.mjs';
-import { getVideos } from '../lib/youtube.mjs';
+import { getVideos, fetchLongFormViaApi } from '../lib/youtube.mjs';
 import Icon from './Icon.astro';
 import VideoFacade from './VideoFacade.astro';
 import { withUtm } from '../lib/url.mjs';
 
 const cfg = site.videos;
+const apiKey = process.env.YOUTUBE_API_KEY;
 
-// 'manual' shows the curated long-form list (with titles). 'rss' pulls the
-// newest uploads at build, falling back to the curated list if the feed fails.
+// With a YouTube Data API key, auto-fetch the newest LONG-FORM uploads (Shorts
+// filtered out by duration). Without a key, use the curated list (or RSS).
 let videos;
-if (cfg.mode === 'manual') {
+if (apiKey) {
+  try {
+    videos = await fetchLongFormViaApi({
+      apiKey,
+      channelId: cfg.channelId,
+      count: cfg.count,
+      minDurationSeconds: cfg.minDurationSeconds,
+    });
+  } catch (err) {
+    console.warn('[videos] Data API fetch failed, using curated list:', err instanceof Error ? err.message : err);
+    videos = cfg.longform.slice(0, cfg.count);
+  }
+} else if (cfg.mode === 'manual') {
   videos = cfg.longform.slice(0, cfg.count);
 } else {
   const result = await getVideos({

@@ -1,0 +1,24 @@
+name: Refresh videos
+
+# Re-deploys the site on a schedule so the latest long-form YouTube uploads
+# appear automatically (each build re-fetches via the YouTube Data API).
+# Setup: add a Vercel Deploy Hook URL as the repo secret VERCEL_DEPLOY_HOOK.
+on:
+  schedule:
+    - cron: '0 7 * * *' # daily at 07:00 UTC
+  workflow_dispatch: {} # also runnable manually from the Actions tab
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel deploy hook
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "VERCEL_DEPLOY_HOOK secret not set — nothing to do."
+            exit 0
+          fi
+          curl -fsS -X POST "$HOOK"
+          echo "Triggered a Vercel rebuild."

@@ -190,15 +190,17 @@ export const site = {
   videos: {
     heading: `Latest from *YouTube*.`,
     body: `Longer videos on building companies, and a life you actually want.`,
-    /** 'manual' → show the curated long-form list below (recommended).
-     *  'rss'    → pull the newest uploads automatically, but note this ALSO
-     *             pulls in Shorts (which can't be reliably filtered out of a
-     *             static build without the YouTube Data API). */
+    /** If the YOUTUBE_API_KEY env var is set (on Vercel), videos AUTO-UPDATE:
+     *  newest long-form uploads are fetched at build and Shorts are filtered out
+     *  by duration. Otherwise it falls back to the curated list below.
+     *  'manual' = curated list. 'rss' = newest uploads, but includes Shorts. */
     mode: `manual` as VideoMode,
     channelId: `UCi0vJUP7Gxm39b0BojUWB3g`,
     channelUrl: `https://www.youtube.com/@EvanBryceRiddle`,
-    /** How many to show (up to this many from the list below). */
+    /** How many to show. */
     count: 6,
+    /** Auto-mode: anything shorter than this (seconds) is treated as a Short. */
+    minDurationSeconds: 90,
     /** Curated long-form videos, newest first. When you publish a new long-form
      *  video, paste a `{ id, title }` at the top. (id = the part after
      *  watch?v=  in the YouTube URL.) */

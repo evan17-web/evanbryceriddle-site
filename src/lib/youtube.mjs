@@ -97,3 +97,51 @@ export async function getVideos(opts) {
     return { videos: fallback, source: 'manual' };
   }
 }
+
+/**
+ * Parse an ISO 8601 duration (e.g. "PT5M30S") into seconds.
+ * @param {unknown} iso
+ * @returns {number}
+ */
+export function parseIsoDuration(iso) {
+  const m = /^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/.exec(typeof iso === 'string' ? iso : '');
+  if (!m) return 0;
+  return (Number(m[1]) || 0) * 3600 + (Number(m[2]) || 0) * 60 + (Number(m[3]) || 0);
+}
+
+/**
+ * Fetch the channel's newest LONG-FORM uploads via the YouTube Data API,
+ * excluding Shorts by duration. Requires an API key. Throws on failure so the
+ * caller can fall back to the curated list.
+ *
+ * @param {{ apiKey: string, channelId: string, count?: number, minDurationSeconds?: number, fetchImpl?: typeof fetch }} opts
+ * @returns {Promise<{ id: string, title: string }[]>}
+ */
+export async function fetchLongFormViaApi({
+  apiKey,
+  channelId,
+  count = 6,
+  minDurationSeconds = 90,
+  fetchImpl = fetch,
+}) {
+  // A channel's "uploads" playlist id is its channel id with "UC" → "UU".
+  const uploads = 'UU' + channelId.slice(2);
+  const listUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=30&playlistId=${uploads}&key=${apiKey}`;
+  const listRes = await fetchImpl(listUrl);
+  if (!listRes || !listRes.ok) throw new Error(`playlistItems HTTP ${listRes ? listRes.status : 'error'}`);
+  const listData = await listRes.json();
+  const ids = (listData.items || []).map((i) => i?.contentDetails?.videoId).filter(Boolean);
+  if (ids.length === 0) throw new Error('no uploads returned');
+
+  const videosUrl = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails,snippet&id=${ids.join(',')}&key=${apiKey}`;
+  const videosRes = await fetchImpl(videosUrl);
+  if (!videosRes || !videosRes.ok) throw new Error(`videos HTTP ${videosRes ? videosRes.status : 'error'}`);
+  const videosData = await videosRes.json();
+
+  const longform = (videosData.items || [])
+    .filter((v) => parseIsoDuration(v?.contentDetails?.duration) >= minDurationSeconds)
+    .map((v) => ({ id: v.id, title: (v.snippet && v.snippet.title) || '' }));
+
+  if (longform.length === 0) throw new Error('no long-form videos found');
+  return longform.slice(0, count);
+}

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { parseFeed, getVideos } from './youtube.mjs';
+import { parseFeed, getVideos, parseIsoDuration, fetchLongFormViaApi } from './youtube.mjs';
 
 const SAMPLE_FEED = `<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns:yt="http://www.youtube.com/xml/schemas/2015">
@@ -120,4 +120,55 @@ test('getVideos in manual mode uses fallback IDs without fetching', async () => 
     videos.map((v) => v.id),
     ['m1', 'm2'],
   );
+});
+
+// ── parseIsoDuration ───────────────────────────────────────────────────────
+test('parseIsoDuration converts ISO 8601 durations to seconds', () => {
+  assert.equal(parseIsoDuration('PT5M30S'), 330);
+  assert.equal(parseIsoDuration('PT45S'), 45);
+  assert.equal(parseIsoDuration('PT1H2M3S'), 3723);
+  assert.equal(parseIsoDuration(''), 0);
+  assert.equal(parseIsoDuration(undefined), 0);
+});
+
+// ── fetchLongFormViaApi: auto long-form, Shorts dropped by duration ─────────
+test('fetchLongFormViaApi keeps long-form and drops Shorts', async () => {
+  const fakeFetch = async (url) => {
+    if (url.includes('playlistItems')) {
+      return {
+        ok: true,
+        json: async () => ({
+          items: [
+            { contentDetails: { videoId: 'long1' } },
+            { contentDetails: { videoId: 'short1' } },
+            { contentDetails: { videoId: 'long2' } },
+          ],
+        }),
+      };
+    }
+    return {
+      ok: true,
+      json: async () => ({
+        items: [
+          { id: 'long1', contentDetails: { duration: 'PT6M' }, snippet: { title: 'Long One' } },
+          { id: 'short1', contentDetails: { duration: 'PT40S' }, snippet: { title: 'A Short' } },
+          { id: 'long2', contentDetails: { duration: 'PT12M3S' }, snippet: { title: 'Long Two' } },
+        ],
+      }),
+    };
+  };
+  const result = await fetchLongFormViaApi({ apiKey: 'K', channelId: 'UCabc123def', count: 6, fetchImpl: fakeFetch });
+  assert.deepEqual(
+    result.map((v) => v.id),
+    ['long1', 'long2'],
+  );
+  assert.equal(result[0].title, 'Long One');
+});
+
+test('fetchLongFormViaApi throws when only Shorts exist (so callers fall back)', async () => {
+  const onlyShorts = async (url) =>
+    url.includes('playlistItems')
+      ? { ok: true, json: async () => ({ items: [{ contentDetails: { videoId: 's1' } }] }) }
+      : { ok: true, json: async () => ({ items: [{ id: 's1', contentDetails: { duration: 'PT30S' }, snippet: { title: 'S' } }] }) };
+  await assert.rejects(fetchLongFormViaApi({ apiKey: 'K', channelId: 'UCxyz', fetchImpl: onlyShorts }));
 });
