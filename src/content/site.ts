@@ -89,7 +89,7 @@ export const site = {
    *  the old site is rehosted somewhere other than evanbryceriddle.com (that domain
    *  will point to THIS new site). */
   oldSite: {
-    url: `https://evanbryceriddle.com/`,
+    url: `https://evanbryceriddle.wixsite.com/portfolio`,
     label: `And here's who I was before the companies. The janky old website, the side hustles, the creative projects.`,
   },
 
@@ -214,9 +214,8 @@ export const site = {
   newsletter: {
     heading: `The *occasional* email.`,
     body: `I send the occasional note on building companies and a life worth living. No daily hustle takes, no spam. Just the useful stuff.`,
-    /** Set this to your Klaviyo EMBED form div once ready (VkFAzM was a popup form),
-     *  then re-enable the klaviyo.js script in Layout.astro. */
-    embed: null as string | null,
+    /** Klaviyo embed form (loaded by the klaviyo.js script in Layout via site.klaviyo). */
+    embed: `<div class="klaviyo-form-VkFAzM"></div>` as string | null,
   },
 
   // ── 8. Footer ──────────────────────────────────────────────────────────────

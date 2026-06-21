@@ -64,6 +64,10 @@ const ogImageUrl = new URL(site.ogImage, Astro.site).href;
     <meta name="twitter:image" content={ogImageUrl} />
 
     <meta name="generator" content={Astro.generator} />
+
+    {site.klaviyo?.companyId && (
+      <script is:inline async src={`https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=${site.klaviyo.companyId}`}></script>
+    )}
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
