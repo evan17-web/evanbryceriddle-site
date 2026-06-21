@@ -43,7 +43,7 @@ if (apiKey) {
         <h2 set:html={emphasize(cfg.heading)} />
         <p class="videos__why">{cfg.body}</p>
       </div>
-      <a class="btn btn--secondary videos__channel" href={withUtm(cfg.channelUrl, 'videos-channel')} target="_blank" rel="noopener noreferrer">
+      <a class="btn btn--secondary videos__channel" href={withUtm(`https://www.youtube.com/channel/${cfg.channelId}?sub_confirmation=1`, 'videos-subscribe')} target="_blank" rel="noopener noreferrer">
         <Icon name="youtube" size={18} />
         Visit the channel
       </a>
@@ -93,7 +93,7 @@ if (apiKey) {
   // registers as a genuine YouTube view (this is NOT autoplay on page load).
   function buildPlayer(id: string, title: string): HTMLIFrameElement {
     const iframe = document.createElement('iframe');
-    iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+    iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&playsinline=1`;
     iframe.title = title || 'YouTube video player';
     iframe.allow =
       'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';

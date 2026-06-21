@@ -117,15 +117,16 @@ const socials = [
 
   .footer__old {
     margin-top: clamp(2rem, 5vw, 3rem);
-    padding: 1.15rem 1.4rem;
-    background: var(--card);
-    border: 1px solid var(--line);
+    padding: 1.3rem 1.5rem;
+    background: rgba(19, 138, 144, 0.08);
+    border: 1px solid rgba(19, 138, 144, 0.24);
+    border-left: 3px solid var(--teal);
     border-radius: var(--radius);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 0.6rem 1.5rem;
+    gap: 0.7rem 1.5rem;
   }
   .footer__old-text {
     font-family: var(--font-display);
@@ -143,8 +144,13 @@ const socials = [
     font-size: 0.9rem;
     color: var(--teal-text);
     white-space: nowrap;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--teal);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.35);
+    transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
   }
-  .footer__old-link:hover { color: var(--teal-strong); }
+  .footer__old-link:hover { background: var(--teal); color: #fbf8f1; transform: translateY(-1px); }
 
   @media (min-width: 620px) {
     .footer__right { align-items: flex-end; }
