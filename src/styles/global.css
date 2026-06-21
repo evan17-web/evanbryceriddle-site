@@ -26,6 +26,12 @@
   /* Hand-drawn marker highlight (amber wash behind emphasised words) */
   --marker: rgba(224, 168, 74, 0.42);
 
+  /* Secondary colour — teal/aqua. The "life" accent (rust stays the "work" accent). */
+  --teal: #138a90;
+  --teal-strong: #0f6e73;
+  --teal-text: #0c5e62;
+  --teal-soft: rgba(19, 138, 144, 0.10);
+
   /* Lines */
   --line: #e4ddcd;
   --line-strong: #d3c8b2;
@@ -132,6 +138,7 @@ strong { font-weight: 600; }
   text-transform: uppercase;
   color: var(--accent-text);
 }
+.eyebrow--teal { color: var(--teal-text); }
 
 .lead { font-size: clamp(1.15rem, 1rem + 0.7vw, 1.4rem); line-height: 1.5; color: var(--ink-soft); }
 
@@ -179,7 +186,12 @@ strong { font-weight: 600; }
   padding-block: clamp(3.75rem, 2rem + 8vw, 7rem);
   scroll-margin-top: calc(var(--nav-h) + 0.5rem);
 }
-.section--raised { background: var(--paper-raised); }
+.section--raised {
+  background-color: var(--paper-raised);
+  /* faint dot grid so raised sections aren't perfectly flat */
+  background-image: radial-gradient(rgba(31, 26, 20, 0.05) 1px, transparent 1.5px);
+  background-size: 26px 26px;
+}
 .section-head { max-width: 44rem; }
 .section-head p { color: var(--ink-soft); font-size: 1.125rem; margin-top: 0.9rem; }
 
@@ -231,6 +243,42 @@ strong { font-weight: 600; }
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
+/* Value chips (teal) */
+.chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--teal-text);
+  background: var(--teal-soft);
+  border: 1px solid color-mix(in srgb, var(--teal) 26%, transparent);
+  border-radius: var(--pill);
+}
+
+/* Image placeholder panel — until a real photo is dropped in */
+.media-ph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  height: 100%;
+  min-height: 9rem;
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--ink-faint);
+  background:
+    radial-gradient(120% 100% at 50% 0%, var(--teal-soft), transparent 70%),
+    var(--paper-raised);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius);
+}
+.media-ph span { font-size: 0.82rem; font-weight: 500; max-width: 24ch; }
+
 /* ── Accessibility utilities ────────────────────────────────────────────── */
 .sr-only {
   position: absolute;
@@ -264,4 +312,14 @@ main:focus { outline: none; }
   html { scroll-behavior: auto; }
   .js .reveal { opacity: 1 !important; transform: none !important; transition: none; }
   .btn:active { transform: none; }
+}
+
+/* ── Motion (subtle, classy — all gated on prefers-reduced-motion) ───────── */
+@keyframes portraitFloat {
+  0%, 100% { transform: rotate(1.2deg) translateY(0); }
+  50% { transform: rotate(1.2deg) translateY(-9px); }
+}
+@keyframes meshDrift {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(5%, -4%) scale(1.12); }
 }

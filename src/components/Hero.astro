@@ -21,7 +21,7 @@ const { hero } = site;
           {hero.secondary.label}
         </a>
       </div>
-      <p class="currently hero__currently"><b>Currently</b> — {hero.currently}</p>
+      <p class="currently hero__currently"><b>Currently:</b> {hero.currently}</p>
     </div>
 
     <div class="hero__aside">
@@ -94,6 +94,10 @@ const { hero } = site;
     color: var(--line-strong);
   }
   .portrait__sig { font-size: 2.5rem; color: var(--accent-text); transform: rotate(-3deg); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .portrait { animation: portraitFloat 7s ease-in-out infinite; }
+  }
 
   @media (max-width: 460px) {
     .hero__actions { flex-direction: column; align-items: stretch; }

@@ -1,0 +1,39 @@
+---
+import { site } from '../content/site';
+import Icon from './Icon.astro';
+
+const { creativeLine } = site.about;
+---
+<section class="interlude">
+  <div class="container interlude__inner reveal">
+    <p class="interlude__icons" aria-hidden="true">
+      <Icon name="play-circle" size={18} />
+      <Icon name="image" size={18} />
+      <Icon name="edit" size={18} />
+    </p>
+    <p class="interlude__line">{creativeLine}</p>
+  </div>
+</section>
+
+<style>
+  .interlude { padding-block: clamp(2.75rem, 5vw, 4.25rem); }
+  .interlude__inner {
+    max-width: 34rem;
+    margin-inline: auto;
+    text-align: center;
+  }
+  .interlude__icons {
+    display: inline-flex;
+    gap: 0.8rem;
+    margin-bottom: 0.9rem;
+    color: var(--teal-text);
+  }
+  .interlude__line {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1.35rem, 1rem + 1.5vw, 1.95rem);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+</style>

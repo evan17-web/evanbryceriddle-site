@@ -1,0 +1,50 @@
+---
+import { site } from '../content/site';
+import { emphasize } from '../lib/text.mjs';
+---
+<section class="manifesto">
+  <div class="manifesto__bg" aria-hidden="true"></div>
+  <div class="container">
+    <p class="manifesto__line reveal" set:html={emphasize(site.manifesto)} />
+  </div>
+</section>
+
+<style>
+  .manifesto {
+    position: relative;
+    overflow: hidden;
+    background: #17120c;
+    color: var(--paper);
+    padding-block: clamp(4rem, 9vw, 7rem);
+  }
+  /* Slow-drifting teal + rust colour wash */
+  .manifesto__bg {
+    position: absolute;
+    inset: -25%;
+    z-index: 0;
+    background:
+      radial-gradient(38% 50% at 22% 30%, rgba(19, 138, 144, 0.45), transparent 62%),
+      radial-gradient(40% 52% at 82% 72%, rgba(176, 85, 46, 0.40), transparent 62%);
+    filter: blur(18px);
+  }
+  .manifesto .container { position: relative; z-index: 1; }
+  .manifesto__line {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2rem, 1.1rem + 3.6vw, 3.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    max-width: 20ch;
+    color: var(--paper);
+    text-wrap: balance;
+  }
+  .manifesto__line :global(em) {
+    font-style: italic;
+    color: #5fd0d4; /* brighter teal, reads on the dark band */
+    background: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .manifesto__bg { animation: meshDrift 18s ease-in-out infinite alternate; }
+  }
+</style>

@@ -30,6 +30,8 @@ export interface BrandCard {
   name: string;
   tagline: string;
   href: string;
+  /** Optional background image (rendered faded behind the card). */
+  image?: string | null;
 }
 
 export interface Resource {
@@ -80,27 +82,43 @@ export const site = {
     currently: `building four companies, writing, and helping founders trade hustle for freedom.`,
   },
 
+  /** Bold statement line for the manifesto band (sits after What I'm building). */
+  manifesto: `Build a business you don't need a *holiday* from.`,
+
   // ── 2. About ───────────────────────────────────────────────────────────────
   about: {
-    heading: `About Evan.`,
+    eyebrow: `Who I am`,
+    heading: `More than the *companies*.`,
     paragraphs: [
-      `I'm Evan. I build community-led companies for ambitious founders who want meaningful work and a life they actually enjoy.`,
-      `A few years ago I was doing the thing a lot of founders do: more revenue, less freedom, a calendar that owned me. So I started building the opposite, on purpose. Now I spend most of my time helping other founders do the same.`,
-      `These days that looks like a handful of companies, a book, and a lot of time spent with founders who refuse to trade their life for their business.`,
+      `I grew up between Melbourne and Hollywood, and these days I don't really live anywhere. I travel full-time, hosting events around the world for founders who'd rather build a life than just a company.`,
+      `Twenty years of soccer, ten of Aussie footy, and an only-child's habit of needing a bit of space to recharge. I want to see the world and make memories while I'm young enough to enjoy them.`,
+      `So I build companies around what I actually value. Art of Mondays works because Jai and I built it for ourselves, so we're always, in a way, building for the people we are.`,
     ],
-    /** Pull-quote + hand-written sign-off shown in the About section. */
-    pullquote: `I refuse to trade my life for my business. So I started building the opposite — on purpose.`,
+    /** Shown as a short aside just after the About section. */
+    creativeLine: `I make videos, take photos, and write. Travel writing, mostly.`,
+    /** Things I'm driven by — shown as chips. */
+    values: [`Health`, `Travel`, `People`, `Adventure`, `Play`],
+    pullquote: `My version of rest isn't sitting still. It's swapping one kind of focus for another.`,
     signoff: `Evan`,
+    /** A video of me talking, so people can hear me, not just read about me. */
+    featuredVideo: { id: `N0PYho3UnKM`, title: `What stepping away showed me about my life` } satisfies VideoItem,
+    /** Photo slots. Drop a file in public/ and set `src` (e.g. `/team.jpg`). */
+    photos: [
+      { src: `/team.jpg` as string | null, label: `The Art of Mondays community` },
+      { src: null as string | null, label: `On the road, facilitating somewhere with a view` },
+    ],
   },
 
   // ── 3. What I'm building ───────────────────────────────────────────────────
   building: {
     heading: `What I'm *building*.`,
+    intro: `Build for yourself. The right people follow.`,
     cards: [
       {
         name: `Art of Mondays`,
         tagline: `A community for ambitious founders building meaningful, profitable companies on their own terms.`,
         href: `https://artofmondays.com/`,
+        image: `/team.jpg`,
       },
       {
         name: `Founder Sports Club`,
@@ -124,8 +142,8 @@ export const site = {
   book: {
     heading: `The *Freedom First* Founder.`,
     body: `Success without the sacrifice. Hustle culture lied. Build a business and a life you can't wait to wake up to. The field manual for founders who want both.`,
-    cta: { label: `Get the book — $20`, href: `https://books.artofmondays.com/freedom/` } satisfies LinkButton,
-    coverAlt: `The Freedom First Founder — book cover`,
+    cta: { label: `Get the book · $20`, href: `https://books.artofmondays.com/freedom/` } satisfies LinkButton,
+    coverAlt: `The Freedom First Founder book cover`,
   },
 
   // ── 5. Free resources ──────────────────────────────────────────────────────
@@ -153,7 +171,7 @@ export const site = {
   // ── 6. Latest videos ───────────────────────────────────────────────────────
   videos: {
     heading: `Latest from *YouTube*.`,
-    body: `Longer videos on building companies — and a life you actually want.`,
+    body: `Longer videos on building companies, and a life you actually want.`,
     /** 'manual' → show the curated long-form list below (recommended).
      *  'rss'    → pull the newest uploads automatically, but note this ALSO
      *             pulls in Shorts (which can't be reliably filtered out of a
