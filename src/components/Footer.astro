@@ -32,6 +32,13 @@ const socials = [
     </div>
   </div>
 
+  <div class="container footer__old">
+    <p class="footer__old-text">{site.oldSite.label}</p>
+    <a class="footer__old-link" href={site.oldSite.url} target="_blank" rel="noopener noreferrer">
+      Visit the old site <Icon name="arrow-up-right" size={15} />
+    </a>
+  </div>
+
   <div class="container footer__base">
     <p>{site.copyright}</p>
   </div>
@@ -106,6 +113,37 @@ const socials = [
     border-top: 1px solid var(--line);
   }
   .footer__base p { font-size: 0.85rem; color: var(--ink-faint); }
+
+  .footer__old {
+    margin-top: clamp(2rem, 5vw, 3rem);
+    padding: 1.15rem 1.4rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem 1.5rem;
+  }
+  .footer__old-text {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    max-width: 52ch;
+  }
+  .footer__old-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--teal-text);
+    white-space: nowrap;
+  }
+  .footer__old-link:hover { color: var(--teal-strong); }
 
   @media (min-width: 620px) {
     .footer__right { align-items: flex-end; }

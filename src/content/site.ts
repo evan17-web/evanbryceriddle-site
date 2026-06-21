@@ -85,6 +85,14 @@ export const site = {
   /** Bold statement line for the manifesto band (sits after What I'm building). */
   manifesto: `Build a business you don't need a *holiday* from.`,
 
+  /** Nostalgic link to the old, pre-companies site. IMPORTANT: update this URL once
+   *  the old site is rehosted somewhere other than evanbryceriddle.com (that domain
+   *  will point to THIS new site). */
+  oldSite: {
+    url: `https://evanbryceriddle.com/`,
+    label: `And here's who I was before the companies. The janky old website, the side hustles, the creative projects.`,
+  },
+
   // ── 2. About ───────────────────────────────────────────────────────────────
   about: {
     eyebrow: `Who I am`,
@@ -96,6 +104,12 @@ export const site = {
     ],
     /** Shown as a short aside just after the About section. */
     creativeLine: `I make videos, take photos, and write. Travel writing, mostly.`,
+    /** A few of my own photos, shown as a strip under the creative line. */
+    gallery: [
+      { src: `/life-1.jpg`, alt: `Roadside coffee with the mountains behind` },
+      { src: `/life-2.jpg`, alt: `A slow morning in Greece` },
+      { src: `/life-3.jpg`, alt: `Mapping out values at an offsite` },
+    ],
     /** Things I'm driven by — shown as chips. */
     values: [`Health`, `Travel`, `People`, `Adventure`, `Play`],
     pullquote: `My version of rest isn't sitting still. It's swapping one kind of focus for another.`,
@@ -105,7 +119,7 @@ export const site = {
     /** Photo slots. Drop a file in public/ and set `src` (e.g. `/team.jpg`). */
     photos: [
       { src: `/team.jpg` as string | null, label: `The Art of Mondays community` },
-      { src: null as string | null, label: `On the road, facilitating somewhere with a view` },
+      { src: `/work-view.jpg` as string | null, label: `On the road, facilitating somewhere with a view` },
     ],
   },
 
@@ -124,16 +138,19 @@ export const site = {
         name: `Founder Sports Club`,
         tagline: `Founders connecting through sport, health, and real friendship. Not networking events, not warm beer.`,
         href: `https://www.artofmondays.com/founder-sports-club`,
+        image: `/fsc.jpg`,
       },
       {
         name: `WLTH WLKS`,
         tagline: `A community for ambitious women in business, connecting locally on monthly walks and globally online.`,
         href: `https://wlthwlks.com/`,
+        image: `/wlth.jpg`,
       },
       {
         name: `Monday Hires`,
         tagline: `Pre-vetted, top 1% global talent for founders, at up to 70% less than hiring locally.`,
         href: `https://mondayhires.com/`,
+        image: `/hires.jpg`,
       },
     ] satisfies BrandCard[],
   },
@@ -155,14 +172,13 @@ export const site = {
         title: `The Hiring Playbook`,
         description: `How I hire people who raise the average, not just fill a seat.`,
         buttonLabel: `Get the playbook`,
-        // FILL: HIRING_PLAYBOOK_FORM — paste the Kit/Beehiiv form URL here.
-        formUrl: null,
+        formUrl: `https://artofmondays.notion.site/How-to-Hire-and-empower-A-Players-1ef381deb0c780ca87bee7cb324237a3?source=copy_link`,
       },
       {
         title: `The Lead Gen Playbook`,
         description: `The system I use to bring in leads without burning out on content.`,
         buttonLabel: `Get the playbook`,
-        // FILL: LEAD_GEN_PLAYBOOK_FORM — paste the Kit/Beehiiv form URL here.
+        // FILL: the link you sent was your Notion workspace root, not the playbook page. Paste the real Lead Gen Playbook link here.
         formUrl: null,
       },
     ] satisfies Resource[],

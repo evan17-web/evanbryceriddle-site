@@ -2,26 +2,31 @@
 import { site } from '../content/site';
 import Icon from './Icon.astro';
 
-const { creativeLine } = site.about;
+const { creativeLine, gallery } = site.about;
 ---
 <section class="interlude">
-  <div class="container interlude__inner reveal">
-    <p class="interlude__icons" aria-hidden="true">
-      <Icon name="play-circle" size={18} />
-      <Icon name="image" size={18} />
-      <Icon name="edit" size={18} />
-    </p>
-    <p class="interlude__line">{creativeLine}</p>
+  <div class="container">
+    <div class="interlude__inner reveal">
+      <p class="interlude__icons" aria-hidden="true">
+        <Icon name="play-circle" size={18} />
+        <Icon name="image" size={18} />
+        <Icon name="edit" size={18} />
+      </p>
+      <p class="interlude__line">{creativeLine}</p>
+    </div>
+    {gallery && gallery.length > 0 && (
+      <ul class="interlude__gallery reveal">
+        {gallery.map((photo) => (
+          <li><img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" /></li>
+        ))}
+      </ul>
+    )}
   </div>
 </section>
 
 <style>
   .interlude { padding-block: clamp(2.75rem, 5vw, 4.25rem); }
-  .interlude__inner {
-    max-width: 34rem;
-    margin-inline: auto;
-    text-align: center;
-  }
+  .interlude__inner { max-width: 34rem; margin-inline: auto; text-align: center; }
   .interlude__icons {
     display: inline-flex;
     gap: 0.8rem;
@@ -35,5 +40,32 @@ const { creativeLine } = site.about;
     line-height: 1.3;
     letter-spacing: -0.01em;
     color: var(--ink);
+  }
+
+  .interlude__gallery {
+    margin-top: clamp(1.75rem, 4vw, 2.5rem);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(0.7rem, 1.6vw, 1.1rem);
+    max-width: 760px;
+    margin-inline: auto;
+  }
+  .interlude__gallery img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
+  }
+  /* lightly scattered, like pinned snaps */
+  .interlude__gallery li:nth-child(1) img { transform: rotate(1.3deg); }
+  .interlude__gallery li:nth-child(2) img { transform: rotate(-1.6deg); }
+  .interlude__gallery li:nth-child(3) img { transform: rotate(1deg); }
+  .interlude__gallery li:hover img { transform: rotate(0deg) scale(1.03); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .interlude__gallery img { transform: none !important; }
   }
 </style>
