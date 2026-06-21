@@ -9,6 +9,7 @@ import '@fontsource/sacramento/400.css';
 
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import Analytics from '@vercel/analytics/astro';
 import { site } from '../content/site';
 
 interface Props {
@@ -21,6 +22,17 @@ interface Props {
 const { title = site.name, description = site.description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImageUrl = new URL(site.ogImage, Astro.site).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  url: site.url,
+  image: ogImageUrl,
+  jobTitle: 'Founder & Writer',
+  description: site.description,
+  sameAs: [site.social.linkedin, site.social.instagram, site.social.youtube],
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -68,6 +80,8 @@ const ogImageUrl = new URL(site.ogImage, Astro.site).href;
     {site.klaviyo?.companyId && (
       <script is:inline async src={`https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=${site.klaviyo.companyId}`}></script>
     )}
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -101,5 +115,6 @@ const ogImageUrl = new URL(site.ogImage, Astro.site).href;
         els.forEach((el) => io.observe(el));
       }
     </script>
+    <Analytics />
   </body>
 </html>

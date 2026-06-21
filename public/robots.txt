@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://evanbryceriddle.com/sitemap-index.xml
