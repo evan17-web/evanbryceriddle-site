@@ -2,6 +2,7 @@
 import { site } from '../content/site';
 import { emphasize } from '../lib/text.mjs';
 import Icon from './Icon.astro';
+import { withUtm } from '../lib/url.mjs';
 
 const { resources } = site;
 ---
@@ -19,7 +20,7 @@ const { resources } = site;
           <p>{item.description}</p>
           <div class="resource-card__action">
             {item.formUrl ? (
-              <a class="btn btn--primary btn--block" href={item.formUrl} target="_blank" rel="noopener noreferrer">
+              <a class="btn btn--primary btn--block" href={withUtm(item.formUrl, 'playbook-' + item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'))} target="_blank" rel="noopener noreferrer">
                 <Icon name="download" size={18} />
                 {item.buttonLabel}
               </a>

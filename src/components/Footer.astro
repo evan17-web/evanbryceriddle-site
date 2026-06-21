@@ -1,6 +1,7 @@
 ---
 import { site } from '../content/site';
 import Icon from './Icon.astro';
+import { withUtm } from '../lib/url.mjs';
 
 const socials = [
   { name: 'LinkedIn', href: site.social.linkedin, icon: 'linkedin' as const },
@@ -23,7 +24,7 @@ const socials = [
       <ul class="footer__social">
         {socials.map((s) => (
           <li>
-            <a href={s.href} aria-label={s.name} target="_blank" rel="noopener noreferrer">
+            <a href={withUtm(s.href, 'footer-' + s.icon)} aria-label={s.name} target="_blank" rel="noopener noreferrer">
               <Icon name={s.icon} size={20} />
             </a>
           </li>
@@ -34,7 +35,7 @@ const socials = [
 
   <div class="container footer__old">
     <p class="footer__old-text">{site.oldSite.label}</p>
-    <a class="footer__old-link" href={site.oldSite.url} target="_blank" rel="noopener noreferrer">
+    <a class="footer__old-link" href={withUtm(site.oldSite.url, 'footer-old-site')} target="_blank" rel="noopener noreferrer">
       Visit the old site <Icon name="arrow-up-right" size={15} />
     </a>
   </div>

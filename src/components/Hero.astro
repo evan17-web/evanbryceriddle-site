@@ -2,6 +2,7 @@
 import { site } from '../content/site';
 import { emphasize } from '../lib/text.mjs';
 import Icon from './Icon.astro';
+import { withUtm } from '../lib/url.mjs';
 
 const { hero } = site;
 ---
@@ -12,7 +13,7 @@ const { hero } = site;
       <h1 class="hero__headline" set:html={emphasize(hero.headline)} />
       <p class="lead hero__subhead">{hero.subhead}</p>
       <div class="hero__actions">
-        <a class="btn btn--accent" href={hero.primary.href} target="_blank" rel="noopener noreferrer">
+        <a class="btn btn--accent" href={withUtm(hero.primary.href, 'hero-read-book')} target="_blank" rel="noopener noreferrer">
           {hero.primary.label}
           <Icon name="arrow-up-right" size={18} />
         </a>

@@ -245,6 +245,8 @@ strong { font-weight: 600; }
 
 /* Value chips (teal) */
 .chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+/* Centre on narrow screens so a short last row reads as intentional, not orphaned */
+@media (max-width: 600px) { .chip-row { justify-content: center; } }
 .chip {
   display: inline-flex;
   align-items: center;

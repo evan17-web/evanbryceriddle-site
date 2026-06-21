@@ -2,6 +2,7 @@
 import { site } from '../content/site';
 import { emphasize } from '../lib/text.mjs';
 import Icon from './Icon.astro';
+import { withUtm } from '../lib/url.mjs';
 
 const { building } = site;
 ---
@@ -14,7 +15,7 @@ const { building } = site;
     <ul class="brand-grid">
       {building.cards.map((card) => (
         <li class="reveal">
-          <a class="brand-card" href={card.href} target="_blank" rel="noopener noreferrer">
+          <a class="brand-card" href={withUtm(card.href, 'building-' + card.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'))} target="_blank" rel="noopener noreferrer">
             {card.image && (
               <span class="brand-card__bg" style={`background-image:url('${card.image}')`} aria-hidden="true"></span>
             )}

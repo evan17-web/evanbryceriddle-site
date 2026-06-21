@@ -105,8 +105,8 @@ export const site = {
       `Twenty years of soccer, ten of Aussie footy, and an only-child's habit of needing a bit of space to recharge. I want to see the world and make memories while I'm young enough to enjoy them.`,
       `So I build companies around what I actually value. Art of Mondays works because Jai and I built it for ourselves, so we're always, in a way, building for the people we are.`,
     ],
-    /** Shown as a short aside just after the About section. */
-    creativeLine: `I make videos, take photos, and write. Travel writing, mostly.`,
+    /** Shown as a short aside (the interlude after What I'm building). */
+    creativeLine: `And when I'm not building businesses... I make videos, take photos, and write. Travel writing, mostly.`,
     /** A few of my own photos, shown as a strip under the creative line. */
     gallery: [
       { src: `/life-1.jpg`, alt: `Roadside coffee with the mountains behind` },
@@ -114,15 +114,15 @@ export const site = {
       { src: `/life-3.jpg`, alt: `Mapping out values at an offsite` },
     ],
     /** Things I'm driven by — shown as chips. */
-    values: [`Health`, `Travel`, `People`, `Adventure`, `Play`],
+    values: [`Health`, `Travel`, `People`, `Ambition`, `Adventure`, `Play`, `Freedom`, `Community`],
     pullquote: `My version of rest isn't sitting still. It's swapping one kind of focus for another.`,
     signoff: `Evan`,
     /** A video of me talking, so people can hear me, not just read about me. */
     featuredVideo: { id: `N0PYho3UnKM`, title: `What stepping away showed me about my life` } satisfies VideoItem,
     /** Photo slots. Drop a file in public/ and set `src` (e.g. `/team.jpg`). */
     photos: [
-      { src: `/team.jpg` as string | null, label: `The Art of Mondays community` },
-      { src: `/work-view.jpg` as string | null, label: `On the road, facilitating somewhere with a view` },
+      { src: `/team.jpg` as string | null, label: `Part of the Art of Mondays community`, href: `https://founderfamily.artofmondays.com/` as string | null },
+      { src: `/work-view.jpg` as string | null, label: `Offices are overrated, am I right?`, href: null as string | null },
     ],
   },
 

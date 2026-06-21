@@ -2,6 +2,7 @@
 import { site } from '../content/site';
 import { emphasize } from '../lib/text.mjs';
 import VideoFacade from './VideoFacade.astro';
+import { withUtm } from '../lib/url.mjs';
 
 const { about } = site;
 const shots = about.photos.filter((p) => p.src);
@@ -29,7 +30,16 @@ const shots = about.photos.filter((p) => p.src);
           <div class="about__shot-frame">
             <img src={photo.src} alt={photo.label} loading="lazy" decoding="async" />
           </div>
-          <span class="about__shot-cap">{photo.label}</span>
+          {photo.href ? (
+            <a
+              class="about__shot-cap about__shot-cap--link"
+              href={withUtm(photo.href, 'about-founder-family')}
+              target="_blank"
+              rel="noopener noreferrer"
+            >{photo.label}</a>
+          ) : (
+            <span class="about__shot-cap">{photo.label}</span>
+          )}
         </li>
       ))}
     </ul>
@@ -91,6 +101,8 @@ const shots = about.photos.filter((p) => p.src);
     font-weight: 500;
     color: var(--ink-soft);
   }
+  .about__shot-cap--link { color: var(--teal-text); transition: color 0.18s ease; }
+  .about__shot-cap--link:hover { color: var(--teal-strong); text-decoration: underline; }
 
   p.about__sign { margin-top: clamp(1.75rem, 3vw, 2.5rem); font-size: 2.9rem; line-height: 1; }
 </style>

@@ -4,6 +4,7 @@ import { emphasize } from '../lib/text.mjs';
 import { getVideos } from '../lib/youtube.mjs';
 import Icon from './Icon.astro';
 import VideoFacade from './VideoFacade.astro';
+import { withUtm } from '../lib/url.mjs';
 
 const cfg = site.videos;
 
@@ -29,7 +30,7 @@ if (cfg.mode === 'manual') {
         <h2 set:html={emphasize(cfg.heading)} />
         <p>{cfg.body}</p>
       </div>
-      <a class="btn btn--secondary videos__channel" href={cfg.channelUrl} target="_blank" rel="noopener noreferrer">
+      <a class="btn btn--secondary videos__channel" href={withUtm(cfg.channelUrl, 'videos-channel')} target="_blank" rel="noopener noreferrer">
         <Icon name="youtube" size={18} />
         Visit the channel
       </a>
