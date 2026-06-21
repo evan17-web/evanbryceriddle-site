@@ -75,7 +75,7 @@ export const site = {
 
   // ── 1. Hero ────────────────────────────────────────────────────────────────
   hero: {
-    kicker: `Founder · Writer · Builder`,
+    kicker: `Founder · Writer · Traveller · Human`,
     headline: `I build companies for founders who want *freedom*, not just growth.`,
     subhead: `Art of Mondays, Founder Sports Club, WLTH WLKS, and Monday Hires. Plus a book about building a business and a life you can't wait to wake up to.`,
     primary: { label: `Read the book`, href: `https://books.artofmondays.com/freedom/` } satisfies LinkButton,
@@ -237,7 +237,6 @@ export const site = {
     instagram: `https://www.instagram.com/evan.bryce/`,
     youtube: `https://www.youtube.com/@EvanBryceRiddle`,
   },
-  contactEmail: `Evan@artofmondays.com`,
   copyright: `© Evan Bryce Riddle`,
 };
 

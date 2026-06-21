@@ -37,7 +37,7 @@ const { newsletter } = site;
 
 <style>
   .newsletter {
-    max-width: 600px;
+    max-width: 780px;
     margin-inline: auto;
     text-align: center;
   }
@@ -51,6 +51,11 @@ const { newsletter } = site;
     border-radius: 50%;
     color: var(--accent-text);
     background: color-mix(in srgb, var(--accent) 13%, transparent);
+  }
+  .newsletter__head h2 {
+    font-size: clamp(1.7rem, 1.15rem + 2vw, 2.2rem);
+    line-height: 1.14;
+    text-wrap: balance;
   }
   .newsletter__head p {
     margin-top: 0.9rem;
@@ -83,7 +88,7 @@ const { newsletter } = site;
     font-size: 0.85rem;
     color: var(--ink-faint);
   }
-  .newsletter__embed { margin-top: 1.85rem; }
+  .newsletter__embed { margin-top: 1.85rem; max-width: 460px; margin-inline: auto; }
 
   @media (max-width: 480px) {
     .newsletter__form { flex-direction: column; }

@@ -17,10 +17,6 @@ const socials = [
     </div>
 
     <div class="footer__right">
-      <a class="footer__contact" href={`mailto:${site.contactEmail}`}>
-        <Icon name="mail" size={18} />
-        <span>{site.contactEmail}</span>
-      </a>
       <ul class="footer__social">
         {socials.map((s) => (
           <li>
@@ -85,16 +81,6 @@ const socials = [
     align-items: flex-start;
     gap: 1.1rem;
   }
-  .footer__contact {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.95rem;
-    color: var(--ink-soft);
-    transition: color 0.18s ease;
-  }
-  .footer__contact:hover { color: var(--accent-text); }
-
   .footer__social { display: flex; gap: 0.6rem; }
   .footer__social a {
     display: inline-flex;
