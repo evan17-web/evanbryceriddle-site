@@ -111,7 +111,7 @@ export const site = {
       `So I build companies around what I actually value. Art of Mondays works because Jai and I built it for ourselves, so we're always, in a way, building for the people we are.`,
     ],
     /** Shown as a short aside (the interlude after What I'm building). */
-    creativeLine: `And when I'm not building businesses... I make videos, take photos, pet kitties, and write. Travel writing, mostly.`,
+    creativeLine: `And when I'm not building businesses... I make videos, take photos, pet kitties, drink matcha (I'm off the coffee), and write. About travel, usually.`,
     /** A few of my own photos, shown as a strip under the creative line. */
     gallery: [
       { src: `/life-1.jpg`, alt: `Roadside coffee with the mountains behind` },
