@@ -225,8 +225,8 @@ export const site = {
 
   // ── 7. Newsletter ──────────────────────────────────────────────────────────
   newsletter: {
-    heading: `Behind the *build*.`,
-    body: `The behind-the-scenes of building the companies, plus business tips and tricks from me and my Founder Family. All free, no spam.`,
+    heading: `Join 50k+ curious minds reading my *Monday Mail* newsletter`,
+    body: `(and the occasional raw journal entry too)`,
     /** Klaviyo embed form (loaded by the klaviyo.js script in Layout via site.klaviyo). */
     embed: `<div class="klaviyo-form-VkFAzM"></div>` as string | null,
   },
