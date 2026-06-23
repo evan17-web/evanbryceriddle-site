@@ -66,9 +66,9 @@ export const site = {
   // ── Sticky nav ─────────────────────────────────────────────────────────────
   nav: [
     { label: `About`, href: `#about` },
-    { label: `Building`, href: `#building` },
+    { label: `Creating`, href: `#building` },
     { label: `Book`, href: `#book` },
-    { label: `Resources`, href: `#resources` },
+    { label: `Free stuff`, href: `#resources` },
     { label: `Videos`, href: `#videos` },
     { label: `Newsletter`, href: `#newsletter` },
   ] satisfies NavLink[],
@@ -76,15 +76,15 @@ export const site = {
   // ── 1. Hero ────────────────────────────────────────────────────────────────
   hero: {
     kicker: `Founder · Writer · Traveller · Human`,
-    headline: `I build companies for founders who want *freedom*, not just growth.`,
-    subhead: `Art of Mondays, Founder Sports Club, WLTH WLKS, and Monday Hires. Plus a book about building a business and a life you can't wait to wake up to.`,
+    headline: `Hi, I'm Evan. I build things for founders who want *freedom*, not just growth.`,
+    subhead: `Four companies right now, run from a laptop wherever I happen to be in the world. Plus a book, and a lot of trying to actually enjoy this crazy thing called life. Here's what I'm making, and why.`,
     primary: { label: `Read the book`, href: `https://books.artofmondays.com/freedom/` } satisfies LinkButton,
     secondary: { label: `Join the newsletter`, href: `#newsletter` } satisfies LinkButton,
     /** Portrait shown in the hero. Replace public/headshot.jpg to change it. */
     photo: `/headshot.jpg` as string | null,
     photoAlt: `Evan Bryce Riddle outdoors by the coast`,
     /** Short, human status line under the hero (edit freely). */
-    currently: `building four companies, writing, and helping founders trade hustle for freedom.`,
+    currently: `in the South of France in a heat wave, prepping Camp Mondays (100 founders taking over a village), and stealing beach reading when I can.`,
   },
 
   /** Bold statement line for the manifesto band (sits after What I'm building). */
@@ -108,6 +108,7 @@ export const site = {
     paragraphs: [
       `I grew up between Melbourne and Hollywood, and these days I don't really live anywhere. I travel full-time, hosting events around the world for founders who'd rather build a life than just a company.`,
       `Twenty years of soccer, ten of Aussie footy, and an only-child's habit of needing a bit of space to recharge. I want to see the world and make memories while I'm young enough to enjoy them.`,
+      `In my twenties I tried a lot of things. Photography, video, a travel blog, freelance writing, even a health supplement brand I got ready to launch and then shelved. There was always passion, but never a hell yes, always an almost. You have to try a bunch of things to find the one, and when you find it, you go all in.`,
       `So I build companies around what I actually value. Art of Mondays works because Jai and I built it for ourselves, so we're always, in a way, building for the people we are.`,
     ],
     /** Shown as a short aside (the interlude after What I'm building). */
@@ -131,9 +132,19 @@ export const site = {
     ],
   },
 
+  // ── Where this is all going ────────────────────────────────────────────────
+  dream: {
+    heading: `Where this is all *going*.`,
+    body: [
+      `I want to build a life where I wake up calm and excited at the same time. Driven, but not running on empty. A reality where I'm constantly inspired, where I get paid to learn and to be around good people.`,
+      `And I want whatever I build to send out ripples, more abundance, happiness, health, and adventure in other people's lives, the same way it's brought all of that into mine.`,
+    ],
+    note: `The right people can change everything.`,
+  },
+
   // ── 3. What I'm building ───────────────────────────────────────────────────
   building: {
-    heading: `What I'm *building*.`,
+    heading: `What I'm *creating* at the moment.`,
     intro: `Build for yourself. The right people follow.`,
     cards: [
       {

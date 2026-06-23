@@ -1,0 +1,46 @@
+---
+import { site } from '../content/site';
+import { emphasize } from '../lib/text.mjs';
+
+const { dream } = site;
+---
+<section class="section" id="dream">
+  <div class="container">
+    <div class="dream">
+      <div class="section-head reveal">
+        <p class="eyebrow eyebrow--teal">The dream</p>
+        <h2 set:html={emphasize(dream.heading)} />
+      </div>
+      <div class="dream__body reveal">
+        {dream.body.map((p) => <p>{p}</p>)}
+      </div>
+      <p class="dream__note reveal">{dream.note}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .dream { max-width: 760px; }
+  .dream__body {
+    margin-top: clamp(1.25rem, 3vw, 1.75rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+  .dream__body p {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 1rem + 1.35vw, 1.7rem);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .dream__note {
+    margin-top: 1.85rem;
+    padding-left: 1.1rem;
+    border-left: 3px solid var(--teal);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--teal-text);
+  }
+</style>
