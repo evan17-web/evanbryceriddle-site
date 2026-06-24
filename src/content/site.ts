@@ -123,8 +123,11 @@ export const site = {
     values: [`Health`, `Travel`, `People`, `Ambition`, `Adventure`, `Play`, `Freedom`, `Community`],
     pullquote: `Health, travel, good people. Everything I build comes back to those three.`,
     signoff: `Evan`,
-    /** A video of me talking, so people can hear me, not just read about me. */
-    featuredVideo: { id: `N0PYho3UnKM`, title: `What stepping away showed me about my life` } satisfies VideoItem,
+    /** Videos of me, so people can hear me, not just read about me. The first leads. */
+    featuredVideos: [
+      { id: `7iOMPj8xNgU`, title: `Freedom wasn't what I expected` },
+      { id: `N0PYho3UnKM`, title: `What stepping away showed me about my life` },
+    ] satisfies VideoItem[],
     /** Photo slots. Drop a file in public/ and set `src` (e.g. `/team.jpg`). */
     photos: [
       { src: `/team.jpg` as string | null, label: `Part of the Art of Mondays community`, href: `https://founderfamily.artofmondays.com/` as string | null },

@@ -24,7 +24,7 @@ const shots = about.photos.filter((p) => p.src);
     </div>
 
     <ul class="about__strip">
-      <VideoFacade id={about.featuredVideo.id} title={about.featuredVideo.title} />
+      {about.featuredVideos.map((v) => <VideoFacade id={v.id} title={v.title} />)}
       {shots.map((photo) => (
         <li class="about__shot">
           <div class="about__shot-frame">
@@ -69,15 +69,15 @@ const shots = about.photos.filter((p) => p.src);
   .about__head-body p { color: var(--ink-soft); font-size: 1.1rem; }
   .about__values { margin-top: 0.7rem; }
 
-  /* Photo-essay strip: video + two frames, equal 16:9 cells */
+  /* Media grid: two videos on top, two life frames below (2x2, 16:9 cells) */
   .about__strip {
     margin-top: clamp(2.25rem, 4vw, 3.25rem);
     display: grid;
     grid-template-columns: 1fr;
-    gap: clamp(1rem, 2vw, 1.4rem);
+    gap: clamp(1rem, 2vw, 1.6rem);
   }
   @media (min-width: 640px) {
-    .about__strip { grid-template-columns: repeat(3, 1fr); }
+    .about__strip { grid-template-columns: repeat(2, 1fr); }
   }
   .about__shot { display: flex; flex-direction: column; }
   .about__shot-frame {
