@@ -77,14 +77,14 @@ export const site = {
   hero: {
     kicker: `Founder · Writer · Traveller · Human`,
     headline: `Hi, I'm Evan. I build things for founders who want *freedom*, not just growth.`,
-    subhead: `Four companies right now, run from a laptop wherever I happen to be in the world. Plus a book, and a lot of trying to actually enjoy this crazy thing called life. Here's what I'm making, and why.`,
+    subhead: `Four companies right now, run from a laptop wherever I happen to be in the world. Plus a book, and a lot of trying to actually enjoy this crazy thing called life.`,
     primary: { label: `Read the book`, href: `https://books.artofmondays.com/freedom/` } satisfies LinkButton,
     secondary: { label: `Join the newsletter`, href: `#newsletter` } satisfies LinkButton,
     /** Portrait shown in the hero. Replace public/headshot.jpg to change it. */
     photo: `/headshot.jpg` as string | null,
     photoAlt: `Evan Bryce Riddle outdoors by the coast`,
     /** Short, human status line under the hero (edit freely). */
-    currently: `in the South of France in a heat wave, prepping Camp Mondays (100 founders taking over a village), and stealing beach reading when I can.`,
+    currently: `in the South of France in a heat wave, prepping Camp Mondays (100 founders taking over a village), and sneaking in beach reading when I can.`,
   },
 
   /** Bold statement line for the manifesto band (sits after What I'm building). */
